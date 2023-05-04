@@ -28,9 +28,11 @@ export const App = () => {
         setProductsCategory(data);
       });
   }
-  
-    getAllProducts()
-  
+  useEffect(() => {
+    getAllProducts();
+  }, []);
+
+
 
 
 
@@ -124,7 +126,8 @@ export const App = () => {
   const render_products = (ProductsCategory) => {
 
     return <div className='category-section fixed'>
-      
+
+
       {console.log("Step 3 : in render_products ")}
       <div class="grid grid-rows-1 grid-flow-col gap-6">
         <h2 className="text-3xl font-extrabold tracking-tight text-gray-600 category-title">Products ({ProductsCategory.length}) </h2>

@@ -17,6 +17,7 @@ export const App = () => {
     query: '',
     list: []
   })
+  
   const [paymentInfo, setPaymentInfo] = useState({
     name: '',
     email: '',

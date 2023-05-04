@@ -28,8 +28,11 @@ export const App = () => {
         setProductsCategory(data);
       });
   }
-
   
+    getAllProducts()
+  
+
+
 
   const items = ProductsCategory.map((el) => (
     <div key={el._id}>
@@ -121,7 +124,7 @@ export const App = () => {
   const render_products = (ProductsCategory) => {
 
     return <div className='category-section fixed'>
-      {getAllProducts()}
+      
       {console.log("Step 3 : in render_products ")}
       <div class="grid grid-rows-1 grid-flow-col gap-6">
         <h2 className="text-3xl font-extrabold tracking-tight text-gray-600 category-title">Products ({ProductsCategory.length}) </h2>
@@ -132,7 +135,7 @@ export const App = () => {
         /></button>
 
       </div>
-      <div className="m-6 p-3 mt-10 ml-0 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-10" style={{ maxHeight: '800px', overflowY: 'scroll' }}>
+      <div className="m-6 p-3 mt-10 ml-0 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-10" style={{ maxHeight: '650px', overflowY: 'scroll' }}>
         {/* Loop Products */}
         {ProductsCategory.map((el, index) => (
 
@@ -184,7 +187,7 @@ export const App = () => {
             <img class="img-fluid" src={el.IMAGE_LINK} />
           </div>
           <div class="col">
-            <div class="row text-muted">{el.PRODUCT_NAME  }</div>
+            <div class="row text-muted">{el.PRODUCT_NAME}</div>
             <div class="row">{el.CATEGORY}</div>
           </div>
           <div class="col">

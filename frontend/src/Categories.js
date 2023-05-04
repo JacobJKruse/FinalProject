@@ -1,1 +1,1 @@
-export const Categories = ["Books", "Music", "Bread", "Tools"];
+export const Categories = ["NES", "SNES", "N64", "GC", "WII", "GB", "GBA","DS", "3DS" ];

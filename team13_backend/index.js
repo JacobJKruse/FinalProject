@@ -7,9 +7,9 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static("public"));
 app.use("/images", express.static("images"));
-mongoose.connect("mongodb://127.0.0.1:27017/FinalProject",
+mongoose.connect("mongodb+srv://jjkruse:root@products.p82ujgz.mongodb.net/test?authMechanism=DEFAULT",
     {
-        dbName: "reactdata",
+        dbName: "FinalProject",
         useNewUrlParser: true,
         useUnifiedTopology: true,
     }

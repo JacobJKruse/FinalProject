@@ -1,13 +1,328 @@
-body {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.cartImage{
+  width:20px;
+  height:20px;
+  float: right;
+  
+  
+}
+body{
+  background: #ddd;
+  min-height: 100vh;
+  vertical-align: middle;
+  display: flex;
+  font-family: sans-serif;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+.title{
+  margin-bottom: 5vh;
+}
+.card{
+  margin: auto;
+  max-width: 950px;
+  width: 90%;
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 1rem;
+  border: transparent;
+}
+@media(max-width:767px){
+  .card{
+      margin: 3vh auto;
+  }
+}
+.cart{
+  background-color: #fff;
+  padding: 4vh 5vh;
+  border-bottom-left-radius: 1rem;
+  border-top-left-radius: 1rem;
+}
+@media(max-width:767px){
+  .cart{
+      padding: 4vh;
+      border-bottom-left-radius: unset;
+      border-top-right-radius: 1rem;
+  }
+}
+.summary{
+  background-color: #ddd;
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+  padding: 4vh;
+  color: rgb(65, 65, 65);
+}
+@media(max-width:767px){
+  .summary{
+  border-top-right-radius: unset;
+  border-bottom-left-radius: 1rem;
+  }
+}
+.summary .col-2{
+  padding: 0;
+}
+.summary .col-10
+{
+  padding: 0;
+}.row{
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+}
+.title b{
+  font-size: 1.5rem;
+}
+.main{
+  margin: 0;
+  padding: 2vh 0;
+  width: 100%;
+}
+.col-2, .col{
+  padding: 0 1vh;
+}
+a{
+  padding: 0 1vh;
+}
+.close{
+  margin-left: auto;
+  font-size: 0.7rem;
+}
+img{
+  width: 3.5rem;
+}
+.back-to-shop{
+  margin-top: 4.5rem;
+}
+h5{
+  margin-top: 4vh;
+}
+hr{
+  margin-top: 1.25rem;
+}
+form{
+  padding: 2vh 0;
+}
+select{
+  border: 1px solid rgba(0, 0, 0, 0.137);
+  padding: 1.5vh 1vh;
+  margin-bottom: 4vh;
+  outline: none;
+  width: 100%;
+  background-color: rgb(247, 247, 247);
+}
+input{
+  border: 1px solid rgba(0, 0, 0, 0.137);
+  padding: 1vh;
+  margin-bottom: 4vh;
+  outline: none;
+  width: 100%;
+  background-color: rgb(247, 247, 247);
+}
+input:focus::-webkit-input-placeholder
+{
+    color:transparent;
+}
+ .btn{
+
+  color: black;
+  width: 100%;
+  font-size: 0.7rem;
+  margin-top: 4vh;
+  padding: 1vh;
+  border-radius: 0;
+}
+.btn:focus{
+  box-shadow: none;
+  outline: none;
+  box-shadow: none;
+  color: black;
+  -webkit-box-shadow: none;
+  -webkit-user-select: none;
+  transition: none; 
+}
+.btn:hover{
+  color: black;
+  border-color: #000;
+} 
+a{
+  color: black; 
+}
+a:hover{
+  color: black;
+  text-decoration: none;
+}
+#code{
+  background-image: linear-gradient(to left, rgba(255, 255, 255, 0.253) , rgba(255, 255, 255, 0.185)), url("https://img.icons8.com/small/16/000000/long-arrow-right.png");
+  background-repeat: no-repeat;
+  background-position-x: 95%;
+  background-position-y: center;
+}
+.popup-content {
+  margin: auto;
+  background: rgb(255, 255, 255);
+  width: 50%;
+  padding: 5px;
+}
+.popup-arrow {
+  color: rgb(255, 255, 255);
+}
+[role='tooltip'].popup-content {
+  width: 200px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 3px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.popup-overlay {
+  background: rgba(0, 0, 0, 0.5);
+}
+[data-popup='tooltip'].popup-overlay {
+  background: transparent;
+}
+.popup{
+  width: 400px;
+  height: 400px;
+  background: rgb(255, 255, 255);
+  border-radius: 6px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 5;
+  position: fixed;
+  transform: translate(-50%,-50%) scale(.1);
+  align-self: center;
+  text-align: center;
+  font-size: x-large;
+  padding: 30px 30px;
+  visibility: hidden;
+  transition: transform 0.4s, top 0.4s;
+}
+.Receipt{
+  width: 500px;
+  height: 500px;
+  background: rgb(255, 255, 255);
+  border-radius: 6px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 5;
+  position: fixed;
+  transform: translate(-50%,-50%) scale(.1);
+  align-self: center;
+  text-align: center;
+  font-size: x-large;
+  padding: 30px 30px;
+  visibility: hidden;
+  transition: transform 0.4s, top 0.4s;
+}
+.open-popup{
+  visibility: visible;
+  top: 50%;
+  transform: translate(-50%,-50%) scale(.8);
+  
+}
+.openReceipt{
+  visibility: visible;
+  top: 50%;
+  transform: translate(-50%,-50%) scale(1);
+  
+}
+.close-popup{
+  left: -50%;
+  transition: transform 0.4s, left 0.4s;
+  transform: translate(-50%,-50%) scale(.1);
+ 
+}
+.popup img{
+  width: 100px;
+  margin-top: -170px;
+  margin-left: 120px;
+  border-radius: 50%;
+  box-shadow: 0 4px 5px rgba(0,0,0,0.2);
+}
+.popup h1 {
+  font-size: 38px;
+  font-weight:500;
+  margin-top: 50px;
+  
+  z-index: 2;
+}
+.popup button{
+  width: 100%;
+  margin-top: 20px;
+  padding: 10px 0;
+  background-color: #4f9000;
+  color: #fff;
+  border: 0;
+  outline: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 5px 5px rgba(0,0,0,0.2);
+  font-size: 18px;
+}
+.popup p{
+  font-size: medium;
+  text-align: center;
+  margin-top: 100px;
+}
+
+
+.Receipt img{
+  width: 100px;
+  margin-top: -170px;
+  margin-left: 120px;
+  border-radius: 50%;
+  box-shadow: 0 4px 5px rgba(0,0,0,0.2);
+}
+.Receipt h1 {
+  font-size: 38px;
+  font-weight:500;
+  margin-top: 10px;
+  
+  z-index: 2;
+}
+.Receipt button{
+  width: 100%;
+  margin-top: 20px;
+  padding: 10px 0;
+  background-color: #4f9000;
+  color: #fff;
+  border: 0;
+  outline: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 5px 5px rgba(0,0,0,0.2);
+  font-size: 18px;
+}
+.Receipt p{
+  font-size: small;
+  text-align: center;
+  margin-top: 30px;
+}
+#showReceipt{
+  width: 50%;
+  background-color: #b93407;
+  color: #fff;
+  border: 0;
+  outline: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 5px 5px rgba(0,0,0,0.2);
+  font-size: 18px;
+}
+#showReceipt{
+  width: 50%;
+  background-color: #b93407;
+  color: #fff;
+  border: 0;
+  outline: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 5px 5px rgba(0,0,0,0.2);
+  font-size: 18px;
+}
+
+.switch{
+  visibility: visible;
+}
+.hide-switch{
+  visibility: hidden;
 }

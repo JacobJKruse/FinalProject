@@ -20,18 +20,26 @@ const host = "localhost";
 
 app.get("/", async (req, resp) => {
     const query = {};
-    const allProducts = await Product.find(query);
+    const allProducts = await Product.find({"CATEGORY":{$regex:"N"}});
     console.log(allProducts);
     resp.send(allProducts);
 });
 
-app.get("/:id", async (req, resp) => {
-    const id = req.params.id;
-    const query = { _id: id };
-    const oneProduct = await Product.findOne(query);
+app.get("/:PRODUCT_NAME", async (req, resp) => {
+    const cat = req.params.PRODUCT_NAME;
+    const query = { PRODUCT_NAME: cat };
+    const oneProduct = await Product.find(query);
     console.log(oneProduct);
     resp.send(oneProduct);
 });
+app.get("/:CATEGORY", async (req, resp) => {
+    const cat = req.params.CATEGORY;
+    const query = { CATEGORY: cat };
+    const oneProduct = await Product.find(query);
+    console.log(oneProduct);
+    resp.send(oneProduct);
+});
+
 
 app.post("/insert", async (req, res) => {
     console.log(req.body);

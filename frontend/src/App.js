@@ -28,15 +28,17 @@ export const App = () => {
         setProductsCategory(data);
       });
   }
-  
-    getAllProducts()
-  
+  useEffect(() => {
+    getAllProducts();
+  }, []);
+
+
 
 
 
   const items = ProductsCategory.map((el) => (
     <div key={el._id}>
-      <img src={el.IMAGE_LINK} width={30} /> <br />
+      <img src={el.IMG_LINK} width={30} /> <br />
       Title: {el.PRODUCT_NAME} <br />
       Category: {el.CATEGORY} <br />
       Price: {el.PRICE} <br />
@@ -111,7 +113,7 @@ export const App = () => {
   const cartItems = cart.map((el) => (
 
     <div key={el.id}>
-      <img class="img-fluid" src={el.image} width={30} />
+      <img class="img-fluid" src={el.IMG_LINK} width={30} />
       {el.title}
       ${el.price}
       <div class="col">
@@ -124,7 +126,8 @@ export const App = () => {
   const render_products = (ProductsCategory) => {
 
     return <div className='category-section fixed'>
-      
+
+
       {console.log("Step 3 : in render_products ")}
       <div class="grid grid-rows-1 grid-flow-col gap-6">
         <h2 className="text-3xl font-extrabold tracking-tight text-gray-600 category-title">Products ({ProductsCategory.length}) </h2>
@@ -145,14 +148,14 @@ export const App = () => {
 
                 <img
                   alt="Product Image"
-                  src={el.IMAGE_LINK}
+                  src={el.IMG_LINK}
                   className="w-full h-full object-center object-cover lg:w-full lg:h-full"
                 />
               </div>
               <div className="flex justify-between p-2">
                 <div>
                   <h3 className="text-sm text-gray-700">
-                    <a href={el.IMAGE_LINK}>
+                    <a href={el.IMG_LINK}>
 
                       <span style={{ fontSize: '12px', fontWeight: '600' }}>{el.PRODUCT_NAME}</span>
 
@@ -161,7 +164,7 @@ export const App = () => {
                   </h3>
 
                   <p className="mt-1 text-sm text-gray-500">Rating: {el.RATING}</p>
-                  <p className="text-sm font-medium text-green-600 text-left">${el.PRICE}</p>
+                  <p className="text-sm font-medium text-green-600 text-left">{el.PRICE}</p>
                   <button type="button" class="btn" variant="light" onClick={() => addToCart(el)}>Add To Cart<img src={cartImage} class="cartImage inline"></img></button>
                 </div>
 
@@ -184,7 +187,7 @@ export const App = () => {
       <div class="row border-top border-bottom" key={el._id}>
         <div class="row main align-items-center">
           <div class="col-2">
-            <img class="img-fluid" src={el.IMAGE_LINK} />
+            <img class="img-fluid" src={el.IMG_LINK} />
           </div>
           <div class="col">
             <div class="row text-muted">{el.PRODUCT_NAME}</div>

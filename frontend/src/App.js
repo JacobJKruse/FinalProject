@@ -13,6 +13,7 @@ export const App = () => {
   const [showPurchase, setshowPurchase] = useState(false);
   //const [ProductsCategory, setProductsCategory] = useState(items);
   const [ProductsCategory, setProductsCategory] = useState([]);
+  const [oneProduct, setOneProduct] = useState([]);
   const [query, setQuery] = useState('');
   const [state, setstate] = useState({
     query: '',
@@ -224,11 +225,14 @@ export const App = () => {
 
 
   function handleClick(tag) {
-    console.log("Step 4 : in handleClick", tag);
-    let filtered = items.filter(cat => cat.category === tag);
-    setProductsCategory(filtered);
-    //ProductsCategory = filtered;
-    console.log("Step 5 : ", items.length, ProductsCategory.length);
+    console.log(tag);
+    fetch("http://localhost:4000/"+ "tag/"+ tag)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Show one product :", tag);
+      console.log(data);
+      setProductsCategory(data);
+    });
   }
 
 

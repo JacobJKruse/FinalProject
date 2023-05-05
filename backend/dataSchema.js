@@ -5,7 +5,7 @@ const ReactFormDataSchema = new mongoose.Schema(
     CATEGORY: { type: String },   
     PRODUCT_NAME: { type: String },
     PRODUCT_RELEASE_DATE: { type: Number },
-    PRICE: { type: String },
+    PRICE: { type: Number },
     RATING: { type: Number },
     PRODUCT_DESC: { type: String },
     IMG_LINK: { type: String }

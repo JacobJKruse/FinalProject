@@ -64,7 +64,7 @@ export const App = () => {
 
   //cart fumctions
   function howManyofThis(id) {
-    let hmot = cart.filter((cartItem) => cartItem.id === id);
+    let hmot = cart.filter((cartItem) => cartItem._id === id);
     return hmot.length;
 
   }
@@ -90,7 +90,7 @@ export const App = () => {
   const total = () => {
     let totalVal = 0;
     for (let i = 0; i < cart.length; i++) {
-      totalVal += cart[i].price;
+      totalVal += cart[i].PRICE;
     }
     setCartTotal(Math.round(totalVal * 100) / 100
     );
@@ -102,22 +102,21 @@ export const App = () => {
   };
 
   const removeFromCart = (el) => {
-    let hardCopy = [...cart];
-    hardCopy = hardCopy.filter((cartItem) => cartItem.id !== el.id);
-    setCart(hardCopy);
+    const copy = cart.filter((cartItem) => cartItem._id !== el._id);
+    setCart(copy);
   };
 
 
 
 
-  const cartItems = cart.map((el) => (
+  const cartItem = cart.map((el) => (
 
-    <div key={el.id}>
+    <div key={el._id}>
       <img class="img-fluid" src={el.IMG_LINK} width={30} />
-      {el.title}
-      ${el.price}
+      {el.PRODUCT_NAME}
+      ${el.PRICE}
       <div class="col">
-        ${el.price} <span class="close">&#10005;</span>{howManyofThis(el.id)}
+        ${el.PRICE} <span class="close">&#10005;</span>{howManyofThis(el._id)}
       </div>
     </div>
   ));
@@ -164,7 +163,7 @@ export const App = () => {
                   </h3>
 
                   <p className="mt-1 text-sm text-gray-500">Rating: {el.RATING}</p>
-                  <p className="text-sm font-medium text-green-600 text-left">{el.PRICE}</p>
+                  <p className="text-sm font-medium text-green-600 text-left">${el.PRICE}</p>
                   <button type="button" class="btn" variant="light" onClick={() => addToCart(el)}>Add To Cart<img src={cartImage} class="cartImage inline"></img></button>
                 </div>
 
@@ -194,11 +193,11 @@ export const App = () => {
             <div class="row">{el.CATEGORY}</div>
           </div>
           <div class="col">
-            <button type="button" variant="light" onClick={() => removeFromCart(el)} > - </button>{" "}
-            <button type="button" variant="light" onClick={() => addToCart(el)}> + </button>
+            <button type="button" variant="heavy" onClick={() => removeFromCart(el)} > - </button>{" "}
+            <button type="button" variant="heavy" onClick={() => addToCart(el)}> + </button>
           </div>
           <div class="col">
-            ${el.price} <span class="close">&#10005;</span>{howManyofThis(el.id)}
+            ${el.PRICE} <span class="close">&#10005;</span>{howManyofThis(el._id)}
           </div>
         </div>
       </div>

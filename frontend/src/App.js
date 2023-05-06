@@ -15,10 +15,7 @@ export const App = () => {
   const [ProductsCategory, setProductsCategory] = useState([]);
   const [oneProduct, setOneProduct] = useState([]);
   const [query, setQuery] = useState('');
-  const [state, setstate] = useState({
-    query: '',
-    list: []
-  })
+  const [state, setstate] = useState('products');
 
   function getAllProducts() {
     fetch("http://localhost:4000/")
@@ -131,7 +128,7 @@ export const App = () => {
       {console.log("Step 3 : in render_products ")}
       <div class="grid grid-rows-1 grid-flow-col gap-6">
         <h2 className="text-3xl font-extrabold tracking-tight text-gray-600 category-title">Products ({ProductsCategory.length}) </h2>
-        <button type="button" class="btn" variant="light" onClick={() => handleShowHideCart()}> Cart<img
+        <button type="button" class="btn" variant="light" onClick={() => setstate('cart')}> Cart<img
           alt="cart Image"
           src={cartImage}
           className=" inline pr-800 w-5 h-5 "
@@ -236,13 +233,21 @@ export const App = () => {
 
 
   const handleChange = (e) => {
+    console.log("change"+e);
+    console.log("http://localhost:4000/"+ e.target.value);
+    if(e.target.value == ''){
+      setQuery('');
+      getAllProducts();
+    }else{
     setQuery(e.target.value);
-    console.log("Step 6 : in handleChange, Target Value :", e.target.value, "  Query Value :", query);
-    const results = items.filter(eachProduct => {
-      if (e.target.value === "") return ProductsCategory;
-      return eachProduct.title.toLowerCase().includes(e.target.value.toLowerCase())
+    fetch("http://localhost:4000/"+ e.target.value)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Show one product :", e);
+      console.log(data);
+      setProductsCategory(data);
     });
-    setProductsCategory(results);
+  }
   }
 
   const productPage = (<div>
@@ -256,12 +261,14 @@ export const App = () => {
             by - <b style={{ color: 'red' }}>Jacob Kruse, Oscar Lenkaitis</b>
           </p>
           <div className="py-18">
-            <input type="search" placeholder="Search" value={query} onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+          
+            <input type="search" placeholder="Search"  onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
 dark:focus:ring-blue-500 dark:focus:border-blue-500" />
           </div>
           <div className="py-5">
+          <btn className="flex bg-amber-600 rounded-full px-2 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2" onClick={() => { getAllProducts() }}>Clear</btn>
             {(Categories) ? <p className='text-white'>Tags : </p> : ''}
             {
               Categories.map(tag => <button key={tag} className="flex bg-amber-600 rounded-full px-2 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2" onClick={() => { handleClick(tag) }}>{tag}</button>)
@@ -582,9 +589,9 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
   return (
 
     <div>
-      <div> {(!showMore && !showCart) && productPage}</div>
+      <div> {state === "products" && productPage}</div>
 
-      <div> {(showMore && !showCart) && cartPage}</div>
+      <div> {state === "cart" && cartPage}</div>
       <div>{(((showMore && showCart) && cart.length > 0) && !showPurchase) && displayCheckOutPage()}</div>
 
 

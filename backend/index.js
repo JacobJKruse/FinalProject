@@ -25,13 +25,14 @@ app.get("/", async (req, resp) => {
     resp.send(allProducts);
 });
 
-//   app.get("/:PRODUCT_NAME", async (req, resp) => {
-//     const cat = req.params.PRODUCT_NAME;
-//     const query = { PRODUCT_NAME: cat };
-//      const oneProduct = await Product.find(query);
-//      console.log(oneProduct);
-//      resp.send(oneProduct);
-//  });
+   app.get("/:PRODUCT_NAME", async (req, resp) => {
+    const cat = req.params.PRODUCT_NAME;
+    console.log(cat);
+    const query = { PRODUCT_NAME: cat };
+     const oneProduct = await Product.find({"PRODUCT_NAME":{$regex:cat, '$options' : 'i'}});
+     console.log(oneProduct);
+     resp.send(oneProduct);
+ });
 app.get("/tag/:CATEGORY", async (req, resp) => {
     const cat = req.params.CATEGORY;
     const query = { CATEGORY: cat };

@@ -133,6 +133,9 @@ export const App = () => {
           src={cartImage}
           className=" inline pr-800 w-5 h-5 "
         /></button>
+       <button type="button" class="btn" variant="light" onClick={() => setstate('admin')}> admin<img
+          className=" inline pr-800 w-5 h-5 "
+        /></button>
 
       </div>
       <div className="m-6 p-3 mt-10 ml-0 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-10" style={{ maxHeight: '650px', overflowY: 'scroll' }}>
@@ -220,6 +223,8 @@ export const App = () => {
   ));
 
 
+  
+
   function handleClick(tag) {
     console.log(tag);
     fetch("http://localhost:4000/"+ "tag/"+ tag)
@@ -294,7 +299,7 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
               <div class="col">
                 <h4>
                   <b>319 Shopping Cart</b>
-                  <span class="inline"><button type="button" class="btn" variant="light" onClick={() => handleShowHideCart()}> Return to Shop<img
+                  <span class="inline"><button type="button" class="btn" variant="light" onClick={() => setstate("products")}> Return to Shop<img
                     alt="cart Image"
                     src={cartImage}
                     className=" inline pr-800 w-5 h-5 "
@@ -314,7 +319,7 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
             <span class="lead fw-normal">${cartTotal}</span>
 
           </p>
-          <span class="inline"><button type="button" class="btn" variant="light" onClick={() => handleShowHideCheckout()}> Proceed to Checkout<img
+          <span class="inline"><button type="button" class="btn" variant="light" onClick={() => setstate("checkout")}> Proceed to Checkout<img
             alt="cart Image"
             src={cartImage}
             className=" inline pr-800 w-5 h-5 "
@@ -473,7 +478,7 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
           <div id="switch">
             <h1>Payment:</h1>
             <div>
-              <span class="inline"><button type="button" class="btn" variant="light" onClick={() => handleShowHideCheckout()}> Return to cart<img
+              <span class="inline"><button type="button" class="btn" variant="light" onClick={() => setstate("cart")}> Return to cart<img
                 alt="cart Image"
                 src={cartImage}
                 className=" inline pr-800 w-5 h-5 "
@@ -581,8 +586,225 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
       </div>
     );
   }
+  const [product, setProduct] = useState([]);
+  const [viewer1, setViewer1] = useState(false);
+
+  const [viewer2, setViewer2] = useState(false);
+  const [viewer4, setViewer4] = useState(false);
+  const [viewer5, setViewer5] = useState(false);
+  const [checked4, setChecked4] = useState(false);
+  const [index, setIndex] = useState(0);
+ 
 
 
+
+
+
+
+  const [addNewProduct, setAddNewProduct] = useState({
+    _id: 0,
+    PRODUCT_NAME: "",
+    PRICE: 0.0,
+    PRODUCT_DESC: "", 
+    CATEGORY: "",
+    IMG_LINK: "http://127.0.0.1:4000/images/",
+    RATING: 0.0,
+  });
+
+
+  function handleAdminChange(evt) {
+    const value = evt.target.value;
+    if (evt.target.name === "_id") {
+      setAddNewProduct({ ...addNewProduct, _id: value });
+    } else if (evt.target.name === "PRODUCT_NAME") {
+      setAddNewProduct({ ...addNewProduct, PRODUCT_NAME: value });
+    } else if (evt.target.name === "PRICE") {
+      setAddNewProduct({ ...addNewProduct, PRICE: value });
+    } else if (evt.target.name === "PRODUCT_DESC") {
+      setAddNewProduct({ ...addNewProduct, PRODUCT_DESC: value });
+    } else if (evt.target.name === "CATEGORY") {
+      setAddNewProduct({ ...addNewProduct, CATEGORY: value });
+    } else if (evt.target.name === "IMG_LINK") {
+      const temp = value;
+      setAddNewProduct({ ...addNewProduct, IMG_LINK: temp });
+    } else if (evt.target.name === "RATING") {
+      setAddNewProduct({ ...addNewProduct, RATING: value });
+    }
+  }
+
+  function handleOnAdminSubmit(e) {
+    e.preventDefault();
+    console.log(e.target.value);
+    fetch("http://localhost:4000/insert", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(addNewProduct),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Post a new product completed");
+        console.log(data);
+        if (data) {
+          //const keys = Object.keys(data);
+          const value = Object.values(data);
+          alert(value);
+        }
+      });
+  }
+
+  useEffect(() => {
+    getAllProducts();
+  }, [checked4]);
+
+  function getOneByOneProductNext() {
+    if (product.length > 0) {
+      if (index === product.length - 1) setIndex(0);
+      else setIndex(index + 1);
+      if (product.length > 0) setViewer4(true);
+      else setViewer4(false);
+    }
+  }
+
+  function getOneByOneProductPrev() {
+    if (product.length > 0) {
+      if (index === 0) setIndex(product.length - 1);
+      else setIndex(index - 1);
+      if (product.length > 0) setViewer4(true);
+      else setViewer4(false);
+    }
+  }
+
+  function deleteOneProduct(deleteid) {
+    console.log("Product to delete :", deleteid);
+    fetch("http://localhost:4000/delete/", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ _id: deleteid }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Delete a product completed : ", deleteid);
+        console.log(data);
+        if (data) {
+          //const keys = Object.keys(data);
+          const value = Object.values(data);
+          alert(value);
+        }
+      });
+    setChecked4(!checked4);
+  }
+
+
+  function updateOneProduct(e) {
+    e.preventDefault();
+    //console.log(e.target.value);
+    fetch("http://localhost:4000/update", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updateProduct),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log("Update product completed");
+            console.log(data);
+            if (data) {
+                //const keys = Object.keys(data);
+                const value = Object.values(data);
+                alert(value);
+            }
+        });
+}
+const [updateProduct, setUpdateProduct] = useState ({
+  _id: 0,
+  price: 0.0,
+
+});
+
+function updateChange(evt) {
+  const value = evt.target.value;
+  if (evt.target.name === "_id") {
+      setUpdateProduct({...updateProduct, _id: value });
+  } else if (evt.target.name === "price") {
+      setUpdateProduct({ ...updateProduct, price: value });
+  }
+}
+const showAllItems = product.map((el) => (
+  <div key={el._id}>
+    <img src={el.image} width={30} /> <br />
+    Title: {el.title} <br />
+    Category: {el.category} <br />
+    Price: {el.price} <br />
+    Rate :{el.rating.rate} and Count:{el.rating.count} <br />
+  </div>
+));
+  const displayAdminPage = () => {
+  return (
+    <div>
+    <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+  integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+  crossorigin="anonymous"
+/>
+      <h1>Catalog of Products </h1>
+      <button onClick={() => getAllProducts()}>Show All users</button>
+      
+      <h1>Show all available Products:</h1>
+      <hr></hr>
+      {viewer1 && <div>Products {showAllItems}</div>}
+      <hr></hr>
+      
+      <hr></hr>
+
+      <div>
+        <h3>Add a new product :</h3>
+        <form action="">
+          <input type="number" placeholder="id?" name="_id" value={addNewProduct._id} onChange={handleAdminChange} />
+          <input type="text" placeholder="title?" name="PRODUCT_NAME" value={addNewProduct.PRODUCT_NAME} onChange={handleAdminChange} />
+          <input type="number" placeholder="price?" name="PRICE" value={addNewProduct.PRICE} onChange={handleAdminChange} />
+          <input type="text" placeholder="description?" name="PRODUCT_DESC" value={addNewProduct.PRODUCT_DESC} onChange={handleAdminChange} />
+          <input type="text" placeholder="category?" name="CATEGORY" value={addNewProduct.CATEGORY} onChange={handleAdminChange} />
+          <input type="text" placeholder="image?" name="IMG_LINK" value={addNewProduct.IMG_LINK} onChange={handleAdminChange} />
+          <input type="number" placeholder="rate?" name="RATING" value={addNewProduct.RATING} onChange={handleAdminChange} />
+          <button type="submit" onClick={handleOnAdminSubmit}>
+            submit
+          </button>
+        </form>
+      </div>
+
+      <div>
+        <h3>Delete one product:</h3>
+        <input type="checkbox" id="acceptdelete" name="acceptdelete" checked={checked4}
+          onChange={(e) => setChecked4(!checked4)} />
+        <button onClick={() => getOneByOneProductPrev()}>Prev</button>
+        <button onClick={() => getOneByOneProductNext()}>Next</button>
+        <button onClick={() => deleteOneProduct(product[index]._id)}>Delete</button>
+        {checked4 && (
+          <div key={product[index]._id}>
+            <img src={product[index].image} width={30} /> <br />
+            Id:{product[index]._id} <br />
+            Title: {product[index].title} <br />
+            Category: {product[index].category} <br />
+            Price: {product[index].price} <br />
+            Rate :{product[index].rating.rate} and Count:
+            {product[index].rating.count} <br />
+          </div>
+        )}
+      </div>
+      <div>
+      <h3>Update Product Price</h3>
+      
+      <form action="">
+                        <input type="number" placeholder="id?" name="_id" value={updateProduct._id} onChange={updateChange} />
+                        <input type="number" placeholder="new price?" name="price" value={updateProduct.price} onChange={updateChange} />
+                        <button class="button-background" type="submit" onClick={updateOneProduct}>
+                            submit
+                        </button>
+                    </form>
+     </div>
+    </div>
+  );
+  }
 
 
   //final return
@@ -590,9 +812,9 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
 
     <div>
       <div> {state === "products" && productPage}</div>
-
+      <div>{state === "admin" && displayAdminPage()}</div>
       <div> {state === "cart" && cartPage}</div>
-      <div>{(((showMore && showCart) && cart.length > 0) && !showPurchase) && displayCheckOutPage()}</div>
+      <div>{((state ==="checkout" && cart.length > 0) ) && displayCheckOutPage()}</div>
 
 
     </div>

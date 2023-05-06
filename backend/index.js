@@ -28,7 +28,7 @@ app.get("/", async (req, resp) => {
    app.get("/:PRODUCT_NAME", async (req, resp) => {
     const cat = req.params.PRODUCT_NAME;
     console.log(cat);
-    const query = { PRODUCT_NAME: cat };
+   
      const oneProduct = await Product.find({"PRODUCT_NAME":{$regex:cat, '$options' : 'i'}});
      console.log(oneProduct);
      resp.send(oneProduct);
@@ -50,8 +50,8 @@ app.post("/insert", async (req, res) => {
     const pdate = req.body.PRODUCT_RELEASE_DATE;
     const pprice = req.body.PRICE;
     const prating = req.body.RATING;
-    const pdescription = req.body.rating.PRODUCT_DESC;
-    const pimage = req.body.rating.IMG_LINK;
+    const pdescription = req.body.PRODUCT_DESC;
+    const pimage = req.body.IMG_LINK;
     const formData = new Product({
         _id: p_id,
         CATEGORY: pcategory,   

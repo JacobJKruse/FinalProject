@@ -66,9 +66,9 @@ export const App = () => {
     return hmot.length;
 
   }
-  function handleShowHideCheckout() {
+  function handleShowHideCart() {
     if (cart.length > 0) {
-      setShowCart(!showCart);
+      setstate("cart");
     } else { window.alert("No items in cart"); }
   }
   function handleshowPurchase() {
@@ -76,11 +76,7 @@ export const App = () => {
       setShowCart(!showCart);
     } else { window.alert("No items in cart"); }
   }
-  function handleShowHideCart() {
-    if ((cart.length > 0) || showMore) {
-      setShowMore(!showMore);
-    } else { window.alert("No items in cart"); }
-  }
+  
   useEffect(() => {
     total();
   }, [cart]);
@@ -128,7 +124,7 @@ export const App = () => {
       {console.log("Step 3 : in render_products ")}
       <div class="grid grid-rows-1 grid-flow-col gap-6">
         <h2 className="text-3xl font-extrabold tracking-tight text-gray-600 category-title">Products ({ProductsCategory.length}) </h2>
-        <button type="button" class="btn" variant="light" onClick={() => setstate('cart')}> Cart<img
+        <button type="button" class="btn" variant="light" onClick={() =>handleShowHideCart()}> Cart<img
           alt="cart Image"
           src={cartImage}
           className=" inline pr-800 w-5 h-5 "
@@ -138,7 +134,7 @@ export const App = () => {
         /></button>
 
       </div>
-      <div className="m-6 p-3 mt-10 ml-0 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-10" style={{ maxHeight: '650px', overflowY: 'scroll' }}>
+      <div className="m-6 p-3 mt-10 ml-0 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-10" style={{ maxHeight: '30vw', overflowY: 'auto' }}>
         {/* Loop Products */}
         {ProductsCategory.map((el, index) => (
 
@@ -812,7 +808,7 @@ const showAllItems = ProductsCategory.map((el) => (
     <div>
       <div> {state === "products" && productPage}</div>
       <div>{state === "admin" && displayAdminPage()}</div>
-      <div> {state === "cart" && cartPage}</div>
+      <div> {(state === "cart" && cart.length > 0) && cartPage}</div>
       <div>{((state ==="checkout" && cart.length > 0) ) && displayCheckOutPage()}</div>
 
 

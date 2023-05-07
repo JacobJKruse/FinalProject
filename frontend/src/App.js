@@ -657,19 +657,19 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
   }, [checked4]);
 
   function getOneByOneProductNext() {
-    if (product.length > 0) {
-      if (index === product.length - 1) setIndex(0);
+    if (ProductsCategory.length > 0) {
+      if (index === ProductsCategory.length - 1) setIndex(0);
       else setIndex(index + 1);
-      if (product.length > 0) setViewer4(true);
+      if (ProductsCategory.length > 0) setViewer4(true);
       else setViewer4(false);
     }
   }
 
   function getOneByOneProductPrev() {
-    if (product.length > 0) {
-      if (index === 0) setIndex(product.length - 1);
+    if (ProductsCategory.length > 0) {
+      if (index === 0) setIndex(ProductsCategory.length - 1);
       else setIndex(index - 1);
-      if (product.length > 0) setViewer4(true);
+      if (ProductsCategory.length > 0) setViewer4(true);
       else setViewer4(false);
     }
   }
@@ -716,7 +716,7 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
 }
 const [updateProduct, setUpdateProduct] = useState ({
   _id: 0,
-  price: 0.0,
+  PRICE: 0.0,
 
 });
 
@@ -725,16 +725,16 @@ function updateChange(evt) {
   if (evt.target.name === "_id") {
       setUpdateProduct({...updateProduct, _id: value });
   } else if (evt.target.name === "price") {
-      setUpdateProduct({ ...updateProduct, price: value });
+      setUpdateProduct({ ...updateProduct, PRICE: value });
   }
 }
-const showAllItems = product.map((el) => (
+const showAllItems = ProductsCategory.map((el) => (
   <div key={el._id}>
-    <img src={el.image} width={30} /> <br />
-    Title: {el.title} <br />
-    Category: {el.category} <br />
-    Price: {el.price} <br />
-    Rate :{el.rating.rate} and Count:{el.rating.count} <br />
+    <img src={el.IMG_LINK} width={30} /> <br />
+    Title: {el.PRODUCT_NAME} <br />
+    Category: {el.CATEGORY} <br />
+    Price: {el.PRICE} <br />
+    Rate :{el.RATING} <br />
   </div>
 ));
   const displayAdminPage = () => {
@@ -778,16 +778,15 @@ const showAllItems = product.map((el) => (
           onChange={(e) => setChecked4(!checked4)} />
         <button onClick={() => getOneByOneProductPrev()}>Prev</button>
         <button onClick={() => getOneByOneProductNext()}>Next</button>
-        <button onClick={() => deleteOneProduct(product[index]._id)}>Delete</button>
+        <button onClick={() => deleteOneProduct(ProductsCategory[index]._id)}>Delete</button>
         {checked4 && (
-          <div key={product[index]._id}>
-            <img src={product[index].image} width={30} /> <br />
-            Id:{product[index]._id} <br />
-            Title: {product[index].title} <br />
-            Category: {product[index].category} <br />
-            Price: {product[index].price} <br />
-            Rate :{product[index].rating.rate} and Count:
-            {product[index].rating.count} <br />
+          <div key={ProductsCategory[index]._id}>
+            <img src={ProductsCategory[index].IMG_LINK} width={30} /> <br />
+            Id:{ProductsCategory[index]._id} <br />
+            Title: {ProductsCategory[index].PRODUCT_NAME} <br />
+            Category: {ProductsCategory[index].CATEGORY} <br />
+            Price: {ProductsCategory[index].PRICE} <br />
+            Rate :{ProductsCategory[index].RATING}  <br />
           </div>
         )}
       </div>
@@ -796,7 +795,7 @@ const showAllItems = product.map((el) => (
       
       <form action="">
                         <input type="number" placeholder="id?" name="_id" value={updateProduct._id} onChange={updateChange} />
-                        <input type="number" placeholder="new price?" name="price" value={updateProduct.price} onChange={updateChange} />
+                        <input type="number" placeholder="new price?" name="price" value={updateProduct.PRICE} onChange={updateChange} />
                         <button class="button-background" type="submit" onClick={updateOneProduct}>
                             submit
                         </button>

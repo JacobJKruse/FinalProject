@@ -257,9 +257,9 @@ export const App = () => {
       <div className="h-screen  bg-slate-800 p-3 xl:basis-1/5" style={{ minWidth: '65%' }}>
         <img className="w-20" src={logo} alt="Sunset in the mountains" />
         <div className="px-2 py-4">
-          <h1 className="text-3xl mb-2 font-bold text-white"> Product Catalog App </h1>
+          <h1 className="text-3xl mb-2 font-bold text-white"> Phase 2 16-Bit Shop </h1>
           <p className="text-gray-700 text-white">
-            by - <b style={{ color: 'red' }}>Jacob Kruse, Oscar Lenkaitis</b>
+            by - <b style={{ color: 'white' }}>Jacob Kruse, Oscar Lenkaitis</b>
           </p>
           <div className="py-18">
           

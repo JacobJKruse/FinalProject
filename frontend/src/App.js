@@ -3,7 +3,7 @@ import logo from "./logo512.png";
 import cartImage from "./addtocart.png";
 import adminImage from "./icon-admin.png";
 import React, { useState, useEffect } from "react";
-import { Categories } from "./Categories"
+
 //import items from "./selected_products.json";
 import checkmark from "./404-tick.png";
 
@@ -18,7 +18,7 @@ export const App = () => {
   const [oneProduct, setOneProduct] = useState([]);
   const [query, setQuery] = useState('');
   const [state, setstate] = useState('products');
-
+  const [Categories, setCategory] = useState([]);
   function getAllProducts() {
     fetch("http://localhost:4000/")
       .then((response) => response.json())
@@ -28,8 +28,18 @@ export const App = () => {
         setProductsCategory(data);
       });
   }
+  function getAllCategory() {
+    fetch("http://localhost:4000/cat/tag")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Show Catalog of Products :");
+        console.log(data);
+        setCategory(data);
+      });
+  }
   useEffect(() => {
     getAllProducts();
+    getAllCategory();
   }, []);
 
 
@@ -240,6 +250,7 @@ export const App = () => {
   }
 
   const newProductPage = () => {
+    
   return(
     <div class="flex">
     <nav className="fixed z-10">
@@ -268,7 +279,14 @@ dark:focus:ring-blue-500 align-items: flex-end  dark:focus:border-blue-500" />
     <div className="w-full pt-24">
         {console.log("Before render :", items.length, ProductsCategory.length)}
         {render_products(ProductsCategory)}
-       
+        <div className="py-5">
+          <btn className="flex bg-amber-600 rounded-full px-2 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2" onClick={() => { getAllProducts() }}>Clear</btn>
+            {(Categories) ? <p className='text-white'>Tags : </p> : ''}
+            {
+              Categories.map(tag => <button key={tag} className="flex bg-amber-600 rounded-full px-2 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2" onClick={() => { handleClick(tag) }}>{tag}</button>)
+            }
+          </div>
+        
 
 
       </div>
@@ -695,6 +713,11 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
       if (value === ""){
         setAddNewProduct({ ...addNewProduct, CATEGORY: defaultaddNewProduct.CATEGORY });
       }else{
+        if(!Categories.includes(value)){
+          
+            Categories.push(value);
+          
+        }
       setAddNewProduct({ ...addNewProduct, CATEGORY: value });}
     } else if (evt.target.name === "IMG_LINK") {
       const temp = value;

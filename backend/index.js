@@ -40,6 +40,13 @@ app.get("/tag/:CATEGORY", async (req, resp) => {
     console.log(oneProduct);
     resp.send(oneProduct);
 });
+app.get("/cat/:CATEGORY", async (req, resp) => {
+    const cat = req.params.CATEGORY;
+    const query = { CATEGORY: cat };
+    const oneProduct = await Product.distinct("CATEGORY");
+    console.log(oneProduct);
+    resp.send(oneProduct);
+});
 
 
 app.post("/insert", async (req, res) => {

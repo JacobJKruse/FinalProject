@@ -118,23 +118,14 @@ export const App = () => {
 
   const render_products = (ProductsCategory) => {
 
-    return <div className='category-section fixed'>
-
-
+    return <div className='category-section filled'>
       {console.log("Step 3 : in render_products ")}
       <div class="grid grid-rows-1 grid-flow-col gap-6">
         <h2 className="text-3xl font-extrabold tracking-tight text-gray-600 category-title">Products ({ProductsCategory.length}) </h2>
-        <button type="button" class="btn" variant="light" onClick={() =>handleShowHideCart()}> Cart<img
-          alt="cart Image"
-          src={cartImage}
-          className=" inline pr-800 w-5 h-5 "
-        /></button>
-       <button type="button" class="btn" variant="light" onClick={() => setstate('admin')}> admin<img
-          className=" inline pr-800 w-5 h-5 "
-        /></button>
+        
 
       </div>
-      <div className="m-6 p-3 mt-10 ml-0 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-10" style={{ maxHeight: '30vw', overflowY: 'auto' }}>
+      <div className="m-6 p-3 mt-10 ml-0 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-4 lg:grid-cols-4 xl:gap-x-10" style={{ maxHeight: '30vw', overflowY: 'auto' }}>
         {/* Loop Products */}
         {ProductsCategory.map((el, index) => (
 
@@ -145,21 +136,19 @@ export const App = () => {
                 <img
                   alt="Product Image"
                   src={el.IMG_LINK}
-                  className="w-full h-full object-center object-cover lg:w-full lg:h-full"
+                  className="w-60 h-60 object-center object-contain  lg:w-full lg:h-full"
                 />
               </div>
               <div className="flex justify-between p-2">
                 <div>
                   <h3 className="text-sm text-gray-700">
                     <a href={el.IMG_LINK}>
-
-                      <span style={{ fontSize: '12px', fontWeight: '600' }}>{el.PRODUCT_NAME}</span>
-
                     </a>
+                    <h2 style={{ fontWeight: '600' }}>{el.PRODUCT_NAME}</h2>
                     <p>Tag - {el.CATEGORY}</p>
                   </h3>
 
-                  <p className="mt-1 text-sm text-gray-500">Rating: {el.RATING}</p>
+                  <p className="mt-1 text-sm text-gray-500">Rating: {el.RATING} %</p>
                   <p className="text-sm font-medium text-green-600 text-left">${el.PRICE}</p>
                   <button type="button" class="btn" variant="light" onClick={() => addToCart(el)}>Add To Cart<img src={cartImage} class="cartImage inline"></img></button>
                 </div>
@@ -251,11 +240,45 @@ export const App = () => {
   }
   }
 
+  const newProductPage = () => {
+  return(
+    <div>
+    <nav >
+    
+      <div className="w-screen  bg-slate-800 p-3 xl:basis-1/5 "  style={{ minWidth: '65%' }}>
+      <div className="flex justify-normal"><img className="w-40 inline" src={logo} alt="16-Bit Shop logo" />
+      <input type="search" placeholder="Search"  onChange={handleChange} className="  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+focus:ring-blue-500 focus:border-blue-500 block w-80 p-2.5 dark:bg-gray-700
+dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
+dark:focus:ring-blue-500 align-items: flex-end  dark:focus:border-blue-500" />
+<button type="button" className="px-44" variant="light" onClick={() =>handleShowHideCart()}> Cart<img
+          alt="cart Image"
+          src={cartImage}
+          className=" inline pr-800 w-5 h-5 "
+        /></button>
+       <button type="button" className="px-44" variant="light" onClick={() => setstate('admin')}> admin<img
+          className=" inline pr-800 w-5 h-5 "
+        /></button>
+</div>
+      
+      
+      </div>
+      
+    </nav>
+    <div className="w-full">
+        {console.log("Before render :", items.length, ProductsCategory.length)}
+        {render_products(ProductsCategory)}
+      </div>
+      </div>
+  );
+  }
   const productPage = (<div>
+ 
+  
     <div className="flex fixed flex-row w-26">
       {console.log("Step 2 : Return App :", items.length, items.length)}
       <div className="h-screen  bg-slate-800 p-3 xl:basis-1/5" style={{ minWidth: '65%' }}>
-        <img className="w-20" src={logo} alt="Sunset in the mountains" />
+        <img className="w-20" src={logo} alt="16-Bit Shop logo" />
         <div className="px-2 py-4">
           <h1 className="text-3xl mb-2 font-bold text-white"> Phase 2 16-Bit Shop </h1>
           <p className="text-gray-700 text-white">
@@ -277,7 +300,7 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
           </div>
         </div>
       </div>
-      <div className="ml-5  p-10 xl:basis-4/5">
+      <div className="w-full">
         {console.log("Before render :", items.length, ProductsCategory.length)}
         {render_products(ProductsCategory)}
       </div>
@@ -458,6 +481,12 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
 
     return (
       <div >
+      <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+  integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+  crossorigin="anonymous"
+/>
         <div>
           <div class="popup" id="popup">
             <h1>Thank You</h1>
@@ -806,7 +835,8 @@ const showAllItems = ProductsCategory.map((el) => (
   return (
 
     <div>
-      <div> {state === "products" && productPage}</div>
+      
+      <div> {state === "products" && newProductPage()}</div>
       <div>{state === "admin" && displayAdminPage()}</div>
       <div> {(state === "cart" && cart.length > 0) && cartPage}</div>
       <div>{((state ==="checkout" && cart.length > 0) ) && displayCheckOutPage()}</div>

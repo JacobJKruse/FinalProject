@@ -294,6 +294,7 @@ dark:focus:ring-blue-500 align-items: flex-end  dark:focus:border-blue-500" />
            <option className="flex bg-white rounded-full px-2 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2" onClick={() => { getAllProducts() }}>Clear</option>
            {(Categories) ? <p className='text-white'>Tags : </p> : ''}
             {
+              
               Categories.map(tag => <option key={tag} className="flex bg-white rounded-full px-2 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2" onClick={() => { handleClick(tag) }}>{tag}</option>)
             }
            </select>

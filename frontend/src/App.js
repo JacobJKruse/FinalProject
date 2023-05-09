@@ -11,6 +11,7 @@ export const App = () => {
   console.log("Step 1: After reading file :");
   const [showMore, setShowMore] = useState(false);
   const [showCart, setShowCart] = useState(false);
+
   const [showPurchase, setshowPurchase] = useState(false);
   //const [ProductsCategory, setProductsCategory] = useState(items);
   const [ProductsCategory, setProductsCategory] = useState([]);
@@ -68,9 +69,10 @@ export const App = () => {
 
   }
   function handleShowHideCart() {
-    if (cart.length > 0) {
-      setstate("cart");
-    } else { window.alert("No items in cart"); }
+    
+    
+   
+    
   }
   function handleshowPurchase() {
     if (cart.length > 0) {
@@ -239,16 +241,15 @@ export const App = () => {
 
   const newProductPage = () => {
   return(
-    <div>
+    <div class="flex">
     <nav className="fixed z-10">
-    
       <div className="w-screen  bg-slate-800 pt-2 pb-2 xl:basis-1/5 "  style={{ minWidth: '65%' }}>
       <div className="flex justify-normal"><img className="w-56 " src={logo} alt="16-Bit Shop logo" />
       <input type="search" placeholder="Search"  onChange={handleChange} className="mt-3  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
 focus:ring-blue-500 focus:border-blue-500 block w-80 p-2.5 dark:bg-gray-700
 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
 dark:focus:ring-blue-500 align-items: flex-end  dark:focus:border-blue-500" />
-<button type="button" className=" border-solid bg-white rounded-lg border-2 border-neutral-50 mx-20 px-5" variant="light" onClick={() =>handleShowHideCart()}> Cart<img
+<button type="button" className=" border-solid bg-white rounded-lg border-2 border-neutral-50 mx-20 px-5" variant="light" onClick={() => handleShowHideCart()}> Cart<img
           alt="cart Image"
           src={cartImage}
           className=" inline pr-800 w-5 h-5 "
@@ -258,16 +259,22 @@ dark:focus:ring-blue-500 align-items: flex-end  dark:focus:border-blue-500" />
           src={adminImage}
           className=" inline pr-800 w-5 h-5 "
         /></button>
+        <div class="text-center">
+   
 </div>
-      
-      
+</div>
       </div>
-      
     </nav>
     <div className="w-full pt-24">
         {console.log("Before render :", items.length, ProductsCategory.length)}
         {render_products(ProductsCategory)}
+       
+
+
       </div>
+     
+      
+         
       </div>
   );
   }
@@ -308,7 +315,7 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
 
   const cartPage = (<div>
     STORE SE/ComS319
-    <div class="card">
+    <div class="card fixed items-center">
       <div class="row">
         {/* HERE, IT IS THE SHOPING CART */}
         <div class="col-md-8 cart">
@@ -469,6 +476,16 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
     let switch1 = document.getElementById("switch");
     switch1.classList.add("hide-switch");
   }
+  function displayPopupCart() {
+    if(showCart === true){
+    let popup = document.getElementById("popupCart");
+    popup.classList.add("open-popup");
+    }else{
+      let popup = document.getElementById("popupCart");
+    popup.classList.add("close-popup");
+    }
+    
+  }
   function displayReceipt() {
     let popup = document.getElementById("Receipt");
     popup.classList.add("open-popup");
@@ -617,6 +634,7 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
   const [viewer4, setViewer4] = useState(false);
   const [viewer5, setViewer5] = useState(false);
   const [checked4, setChecked4] = useState(false);
+  const [checked5, setChecked5] = useState(false);
   const [index, setIndex] = useState(0);
  
 
@@ -627,11 +645,22 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
 
   const [addNewProduct, setAddNewProduct] = useState({
     _id: 0,
-    PRODUCT_NAME: "",
+    PRODUCT_NAME: "No Product Name",
     PRICE: 0.0,
-    PRODUCT_DESC: "", 
-    CATEGORY: "",
-    IMG_LINK: "http://127.0.0.1:4000/images/",
+    PRODUCT_DESC: "No Description", 
+    CATEGORY: "No Category",
+    PRODUCT_RELEASE_DATE: 0,
+    IMG_LINK: "http://127.0.0.1:4000/images/noImage.jpg",
+    RATING: 0.0,
+  });
+  const [defaultaddNewProduct, defaultsetAddNewProduct] = useState({
+    _id: 0,
+    PRODUCT_NAME: "No Product Name",
+    PRICE: 0.0,
+    PRODUCT_DESC: "No Description", 
+    CATEGORY: "No Category",
+    PRODUCT_RELEASE_DATE: 0,
+    IMG_LINK: "http://127.0.0.1:4000/images/noImage.jpg",
     RATING: 0.0,
   });
 
@@ -639,20 +668,55 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
   function handleAdminChange(evt) {
     const value = evt.target.value;
     if (evt.target.name === "_id") {
+      if (value === ""){
+        setAddNewProduct({ ...addNewProduct, _id: defaultaddNewProduct._id });
+      }else{
       setAddNewProduct({ ...addNewProduct, _id: value });
+      }
     } else if (evt.target.name === "PRODUCT_NAME") {
+      if (value === ""){
+        setAddNewProduct({ ...addNewProduct, PRODUCT_NAME: defaultaddNewProduct.PRODUCT_NAME });
+      }else{
       setAddNewProduct({ ...addNewProduct, PRODUCT_NAME: value });
+      }
     } else if (evt.target.name === "PRICE") {
+      if (value === ""){
+        setAddNewProduct({ ...addNewProduct, PRICE: defaultaddNewProduct.PRICE });
+      }else{
       setAddNewProduct({ ...addNewProduct, PRICE: value });
+      }
     } else if (evt.target.name === "PRODUCT_DESC") {
+      if (value === ""){
+        setAddNewProduct({ ...addNewProduct, PRODUCT_DESC: defaultaddNewProduct.PRODUCT_DESC });
+      }else{
       setAddNewProduct({ ...addNewProduct, PRODUCT_DESC: value });
+      }
     } else if (evt.target.name === "CATEGORY") {
-      setAddNewProduct({ ...addNewProduct, CATEGORY: value });
+      if (value === ""){
+        setAddNewProduct({ ...addNewProduct, CATEGORY: defaultaddNewProduct.CATEGORY });
+      }else{
+      setAddNewProduct({ ...addNewProduct, CATEGORY: value });}
     } else if (evt.target.name === "IMG_LINK") {
       const temp = value;
+      if (value === ""){
+        setAddNewProduct({ ...addNewProduct, IMG_LINK: defaultaddNewProduct.IMG_LINK });
+      }else{
       setAddNewProduct({ ...addNewProduct, IMG_LINK: temp });
+      }
     } else if (evt.target.name === "RATING") {
+      if (value === ""){
+        setAddNewProduct({ ...addNewProduct, RATING: defaultaddNewProduct.RATING });
+      }else{
       setAddNewProduct({ ...addNewProduct, RATING: value });
+      }
+    }
+    else if (evt.target.name === "PRODUCT_RELEASE_DATE") {
+      if (value === ""){
+        setAddNewProduct({ ...addNewProduct, PRODUCT_RELEASE_DATE: defaultaddNewProduct.PRODUCT_RELEASE_DATE });
+      }
+      else{
+      setAddNewProduct({ ...addNewProduct, PRODUCT_RELEASE_DATE: value });
+      }
     }
   }
 
@@ -740,7 +804,12 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
 }
 const [updateProduct, setUpdateProduct] = useState ({
   _id: 0,
-  PRICE: 0.0,
+  IMG_LINK:"http://127.0.0.1:4000/images/noImage.jpg",
+  PRICE: 0,
+  PRODUCT_DESC:"No Updated Description",
+  PRODUCT_NAME: "No Updated Product Name",
+  PRODUCT_RELEASE_DATE: 0,
+  RATING: 0,
 
 });
 
@@ -749,8 +818,27 @@ function updateChange(evt) {
   if (evt.target.name === "_id") {
       setUpdateProduct({...updateProduct, _id: value });
   } else if (evt.target.name === "price") {
+    if (value === null){
+      setUpdateProduct({ ...updateProduct, PRICE: 70 });
+    }else{
       setUpdateProduct({ ...updateProduct, PRICE: value });
+    }
   }
+  else if (evt.target.name === "description") {
+    setUpdateProduct({ ...updateProduct, PRODUCT_DESC: value });
+}
+else if (evt.target.name === "image") {
+  setUpdateProduct({ ...updateProduct, IMG_LINK: value });
+}
+else if (evt.target.name === "rating") {
+  setUpdateProduct({ ...updateProduct, RATING: value });
+}
+else if (evt.target.name === "name") {
+  setUpdateProduct({ ...updateProduct, PRODUCT_NAME: value });
+}
+else if (evt.target.name === "date") {
+  setUpdateProduct({ ...updateProduct, PRODUCT_RELEASE_DATE: value });
+}
 }
 const showAllItems = ProductsCategory.map((el) => (
   <div key={el._id}>
@@ -763,66 +851,132 @@ const showAllItems = ProductsCategory.map((el) => (
 ));
   const displayAdminPage = () => {
   return (
-    <div>
+    <div className="bg-emerald-200">
     <link
   rel="stylesheet"
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
   integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
   crossorigin="anonymous"
 />
-      <h1>Catalog of Products </h1>
-      <button onClick={() => getAllProducts()}>Show All users</button>
+      <h1>Admin Page</h1>
       
-      <h1>Show all available Products:</h1>
-      <hr></hr>
-      {viewer1 && <div>Products {showAllItems}</div>}
-      <hr></hr>
-      
-      <hr></hr>
-
-      <div>
-        <h3>Add a new product :</h3>
-        <form action="">
-          <input type="number" placeholder="id?" name="_id" value={addNewProduct._id} onChange={handleAdminChange} />
-          <input type="text" placeholder="title?" name="PRODUCT_NAME" value={addNewProduct.PRODUCT_NAME} onChange={handleAdminChange} />
-          <input type="number" placeholder="price?" name="PRICE" value={addNewProduct.PRICE} onChange={handleAdminChange} />
-          <input type="text" placeholder="description?" name="PRODUCT_DESC" value={addNewProduct.PRODUCT_DESC} onChange={handleAdminChange} />
-          <input type="text" placeholder="category?" name="CATEGORY" value={addNewProduct.CATEGORY} onChange={handleAdminChange} />
-          <input type="text" placeholder="image?" name="IMG_LINK" value={addNewProduct.IMG_LINK} onChange={handleAdminChange} />
-          <input type="number" placeholder="rate?" name="RATING" value={addNewProduct.RATING} onChange={handleAdminChange} />
-          <button type="submit" onClick={handleOnAdminSubmit}>
-            submit
-          </button>
-        </form>
-      </div>
-
-      <div>
-        <h3>Delete one product:</h3>
-        <input type="checkbox" id="acceptdelete" name="acceptdelete" checked={checked4}
-          onChange={(e) => setChecked4(!checked4)} />
-        <button onClick={() => getOneByOneProductPrev()}>Prev</button>
-        <button onClick={() => getOneByOneProductNext()}>Next</button>
-        <button onClick={() => deleteOneProduct(ProductsCategory[index]._id)}>Delete</button>
-        {checked4 && (
+      <h1>Display Product Information</h1>
+      <input type="checkbox" id="acceptdelete" name="acceptdelete" checked={checked5}
+          onChange={(e) => setChecked5(!checked5)} />
+      <button className=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300"  onClick={() => getOneByOneProductPrev()}>Prev</button>
+        <button  className=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300" onClick={() => getOneByOneProductNext()}>Next</button>
+        {checked5 && (
           <div key={ProductsCategory[index]._id}>
-            <img src={ProductsCategory[index].IMG_LINK} width={30} /> <br />
+            <img  class="h-1/6 w-1/6 mt-5"src={ProductsCategory[index].IMG_LINK} width={50} height={50} /> <br />
             Id:{ProductsCategory[index]._id} <br />
             Title: {ProductsCategory[index].PRODUCT_NAME} <br />
             Category: {ProductsCategory[index].CATEGORY} <br />
+            Description: {ProductsCategory[index].PRODUCT_DESC} <br />
+            Date: {ProductsCategory[index].PRODUCT_RELEASE_DATE} <br />
+            Price: {ProductsCategory[index].PRICE} <br />
+            Rate :{ProductsCategory[index].RATING}  <br />
+          </div>
+        )}
+      <hr></hr>
+     
+      <div class=" ">
+      <h1>Add a new product :</h1>
+      <h3>All Boxes must be filled out</h3>
+      <div key={addNewProduct._id}>
+            <img  class="h-1/6 w-1/6 mt-5"src={addNewProduct.IMG_LINK} width={50} height={50} /> <br />
+            Id:{addNewProduct._id} <br />
+            Title: {addNewProduct.PRODUCT_NAME} <br />
+            Category: {addNewProduct.CATEGORY} <br />
+            Description: {addNewProduct.PRODUCT_DESC} <br />
+            Date: {addNewProduct.PRODUCT_RELEASE_DATE} <br />
+            Price: {addNewProduct.PRICE} <br />
+            Rate :{addNewProduct.RATING}  <br />
+          </div>
+        <form action="" className="  mx-5   gap-10 place-content-center  grid-col-1" >
+        <input type="number" className="bg-emerald-100 w-50  place-content-center" placeholder="id?" name="_id"  onChange={handleAdminChange} />
+          
+          
+          <input type="text" placeholder="title?" className="bg-emerald-100 w-50  " name="PRODUCT_NAME"  onChange={handleAdminChange} />
+          <input type="number" placeholder="price?" className="bg-emerald-100 w-50 " name="PRICE"  onChange={handleAdminChange} />
+          <input type="text" placeholder="description?" className="bg-emerald-100 w-50 " name="PRODUCT_DESC"  onChange={handleAdminChange} />
+          <input type="text" placeholder="category?"  className="bg-emerald-100 w-50 " name="CATEGORY"  onChange={handleAdminChange} />
+          <input type="text" placeholder="image?"  className="bg-emerald-100 w-50 " name="IMG_LINK"  onChange={handleAdminChange} />
+          <input type="number" placeholder="rate?"  className="bg-emerald-100 w-50 " name="RATING"  onChange={handleAdminChange} />
+          <input type="number" placeholder="release date year?"  className="bg-emerald-100 w-50 " name="PRODUCT_RELEASE_DATE"  onChange={handleAdminChange} />
+        </form>
+        <button type="submit" className=" place-content-center w-20 h-10 rounded-full mx-20 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300" onClick={handleOnAdminSubmit}>
+            submit
+          </button> 
+      </div>
+      <hr></hr>
+     
+      <div class="mb-32 ps-20">
+        <h3>Delete one product:</h3>
+        
+         <div>
+         <input type="checkbox" id="acceptdelete" name="acceptdelete" checked={checked4}
+          onChange={(e) => setChecked4(!checked4)} />
+            <p className="">Check to Activate</p>
+          </div>
+        <button className=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300"  onClick={() => getOneByOneProductPrev()}>Prev</button>
+        <button  className=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300" onClick={() => getOneByOneProductNext()}>Next</button>
+        <button className=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300" onClick={() => deleteOneProduct(ProductsCategory[index]._id)}>Delete</button>
+        {checked4 && (
+          <div key={ProductsCategory[index]._id}>
+            <img  class="h-1/6 w-1/6 mt-5"src={ProductsCategory[index].IMG_LINK} width={50} height={50} /> <br />
+            Id:{ProductsCategory[index]._id} <br />
+            Title: {ProductsCategory[index].PRODUCT_NAME} <br />
+            Category: {ProductsCategory[index].CATEGORY} <br />
+            Description: {ProductsCategory[index].PRODUCT_DESC} <br />
+            Date: {ProductsCategory[index].PRODUCT_RELEASE_DATE} <br />
             Price: {ProductsCategory[index].PRICE} <br />
             Rate :{ProductsCategory[index].RATING}  <br />
           </div>
         )}
       </div>
-      <div>
-      <h3>Update Product Price</h3>
-      
+      <hr></hr>
+      <div class="mt-20">
+      <h1>Update Product Price</h1>
+      <h3>All Boxes must be filled out</h3>
+      <button className=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300"  onClick={() => getOneByOneProductPrev()}>Prev</button>
+        <button  className=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300" onClick={() => getOneByOneProductNext()}>Next</button>
       <form action="">
-                        <input type="number" placeholder="id?" name="_id" value={updateProduct._id} onChange={updateChange} />
-                        <input type="number" placeholder="new price?" name="price" value={updateProduct.PRICE} onChange={updateChange} />
-                        <button class="button-background" type="submit" onClick={updateOneProduct}>
+      <div>  
+          <p>ID:</p> <input type="number"  name="_id" class="bg-emerald-100 w-50 "  placeholder={ProductsCategory[index]._id} onChange={updateChange} /></div>
+          <div>
+          <p>Name:</p> <input type="text"  name="name" class="bg-emerald-100 w-50  " placeholder={ProductsCategory[index].PRODUCT_NAME} onChange={updateChange} />
+                        
+          </div>
+          <div>
+          <p>Price:</p> 
+          <input type="number"  name="price" class="bg-emerald-100 w-50 " value={null} placeholder={ProductsCategory[index].PRICE} onChange={updateChange}/>
+                        
+            </div>
+            <div>
+            <p>Description:</p> 
+            <input type="text"  name="description" class="bg-emerald-100 w-50 " placeholder={ProductsCategory[index].PRODUCT_DESC} onChange={updateChange} />
+                        
+            </div>
+            <div>
+            <p>Date:</p> 
+            <input type="number"  name="description" class="bg-emerald-100 w-50 " placeholder={ProductsCategory[index].PRODUCT_RELEASE_DATE} onChange={updateChange} />
+             
+            </div>
+            <div>
+            <p>Image Link:</p> 
+            <input type="text"  name="image" class="bg-emerald-100 w-50 " placeholder={ProductsCategory[index].IMG_LINK} onChange={updateChange} />
+             
+            </div>
+            <div>
+            <p>Rating:</p> 
+            <input type="text"  name="rating" class="bg-emerald-100 w-50 " placeholder={ProductsCategory[index].RATING} onChange={updateChange} />
+            </div>
+            <div>
+            <button class=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300" type="submit" onClick={updateOneProduct}>
                             submit
                         </button>
+            </div>
+                       
                     </form>
      </div>
     </div>

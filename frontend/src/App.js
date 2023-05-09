@@ -1,6 +1,7 @@
 
 import logo from "./logo512.png";
 import cartImage from "./addtocart.png";
+import adminImage from "./icon-admin.png";
 import React, { useState, useEffect } from "react";
 import { Categories } from "./Categories"
 //import items from "./selected_products.json";
@@ -120,12 +121,8 @@ export const App = () => {
 
     return <div className='category-section filled'>
       {console.log("Step 3 : in render_products ")}
-      <div class="grid grid-rows-1 grid-flow-col gap-6">
-        <h2 className="text-3xl font-extrabold tracking-tight text-gray-600 category-title">Products ({ProductsCategory.length}) </h2>
-        
-
-      </div>
-      <div className="m-6 p-3 mt-10 ml-0 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-4 lg:grid-cols-4 xl:gap-x-10" style={{ maxHeight: '30vw', overflowY: 'auto' }}>
+      
+      <div className="m-0 p-3 mt-0 ml-0 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-4 lg:grid-cols-4 xl:gap-x-10" style={{ maxHeight: '100%', overflowY: 'auto' }}>
         {/* Loop Products */}
         {ProductsCategory.map((el, index) => (
 
@@ -243,20 +240,22 @@ export const App = () => {
   const newProductPage = () => {
   return(
     <div>
-    <nav >
+    <nav className="fixed z-10">
     
-      <div className="w-screen  bg-slate-800 p-3 xl:basis-1/5 "  style={{ minWidth: '65%' }}>
-      <div className="flex justify-normal"><img className="w-40 inline" src={logo} alt="16-Bit Shop logo" />
-      <input type="search" placeholder="Search"  onChange={handleChange} className="  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+      <div className="w-screen  bg-slate-800 pt-2 pb-2 xl:basis-1/5 "  style={{ minWidth: '65%' }}>
+      <div className="flex justify-normal"><img className="w-56 " src={logo} alt="16-Bit Shop logo" />
+      <input type="search" placeholder="Search"  onChange={handleChange} className="mt-3  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
 focus:ring-blue-500 focus:border-blue-500 block w-80 p-2.5 dark:bg-gray-700
 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
 dark:focus:ring-blue-500 align-items: flex-end  dark:focus:border-blue-500" />
-<button type="button" className="px-44" variant="light" onClick={() =>handleShowHideCart()}> Cart<img
+<button type="button" className=" border-solid bg-white rounded-lg border-2 border-neutral-50 mx-20 px-5" variant="light" onClick={() =>handleShowHideCart()}> Cart<img
           alt="cart Image"
           src={cartImage}
           className=" inline pr-800 w-5 h-5 "
         /></button>
-       <button type="button" className="px-44" variant="light" onClick={() => setstate('admin')}> admin<img
+       <button type="button" className="border-solid bg-white rounded-lg border-2 border-neutral-50 mx-6 px-5 " variant="light" onClick={() => setstate('admin')}> admin<img
+          alt="admin Image"
+          src={adminImage}
           className=" inline pr-800 w-5 h-5 "
         /></button>
 </div>
@@ -265,7 +264,7 @@ dark:focus:ring-blue-500 align-items: flex-end  dark:focus:border-blue-500" />
       </div>
       
     </nav>
-    <div className="w-full">
+    <div className="w-full pt-24">
         {console.log("Before render :", items.length, ProductsCategory.length)}
         {render_products(ProductsCategory)}
       </div>

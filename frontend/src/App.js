@@ -874,12 +874,11 @@ function updateChange(evt) {
   const value = evt.target.value;
   if (evt.target.name === "_id") {
       setUpdateProduct({...updateProduct, _id: value });
-  } else if (evt.target.name === "price") {
-    if (value === null){
-      setUpdateProduct({ ...updateProduct, PRICE: 70 });
-    }else{
+  } 
+  else if (evt.target.name === "price") {
+    
       setUpdateProduct({ ...updateProduct, PRICE: value });
-    }
+    
   }
   else if (evt.target.name === "description") {
     setUpdateProduct({ ...updateProduct, PRODUCT_DESC: value });
@@ -1021,7 +1020,7 @@ const showAllItems = ProductsCategory.map((el) => (
             </div>
             <div>
             <p>Date:</p> 
-            <input type="number"  name="description" class="bg-emerald-100 w-50 " placeholder={ProductsCategory[index].PRODUCT_RELEASE_DATE} onChange={updateChange} />
+            <input type="number"  name="date" class="bg-emerald-100 w-50 " placeholder={ProductsCategory[index].PRODUCT_RELEASE_DATE} onChange={updateChange} />
              
             </div>
             <div>

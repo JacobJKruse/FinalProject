@@ -4,6 +4,7 @@ import cartImage from "./addtocart.png";
 import adminImage from "./icon-admin.png";
 import React, { useState, useEffect } from "react";
 
+
 //import items from "./selected_products.json";
 import checkmark from "./404-tick.png";
 
@@ -248,6 +249,25 @@ export const App = () => {
     });
   }
   }
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
 
   const newProductPage = () => {
     
@@ -270,6 +290,14 @@ dark:focus:ring-blue-500 align-items: flex-end  dark:focus:border-blue-500" />
           src={adminImage}
           className=" inline pr-800 w-5 h-5 "
         /></button>
+           <select id="arrayDropdown" >
+           <option className="flex bg-white rounded-full px-2 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2" onClick={() => { getAllProducts() }}>Clear</option>
+           {(Categories) ? <p className='text-white'>Tags : </p> : ''}
+            {
+              Categories.map(tag => <option key={tag} className="flex bg-white rounded-full px-2 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2" onClick={() => { handleClick(tag) }}>{tag}</option>)
+            }
+           </select>
+
         <div class="text-center">
    
 </div>
@@ -279,13 +307,7 @@ dark:focus:ring-blue-500 align-items: flex-end  dark:focus:border-blue-500" />
     <div className="w-full pt-24">
         {console.log("Before render :", items.length, ProductsCategory.length)}
         {render_products(ProductsCategory)}
-        <div className="py-5">
-          <btn className="flex bg-amber-600 rounded-full px-2 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2" onClick={() => { getAllProducts() }}>Clear</btn>
-            {(Categories) ? <p className='text-white'>Tags : </p> : ''}
-            {
-              Categories.map(tag => <button key={tag} className="flex bg-amber-600 rounded-full px-2 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2" onClick={() => { handleClick(tag) }}>{tag}</button>)
-            }
-          </div>
+       
         
 
 
@@ -296,6 +318,10 @@ dark:focus:ring-blue-500 align-items: flex-end  dark:focus:border-blue-500" />
       </div>
   );
   }
+ 
+     
+      
+   
   const productPage = (<div>
  
   
@@ -872,6 +898,7 @@ const showAllItems = ProductsCategory.map((el) => (
     Rate :{el.RATING} <br />
   </div>
 ));
+
   const displayAdminPage = () => {
   return (
     <div className="bg-emerald-200">
@@ -882,7 +909,11 @@ const showAllItems = ProductsCategory.map((el) => (
   crossorigin="anonymous"
 />
       <h1>Admin Page</h1>
-      
+      <button type="button" className=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300" variant="light" onClick={() => window.location.reload(false)}> Exit<img
+          alt="admin Image"
+          src={cartImage}
+          className=" inline pr-800 w-5 h-5 "
+        /></button>
       <h1>Display Product Information</h1>
       <input type="checkbox" id="acceptdelete" name="acceptdelete" checked={checked5}
           onChange={(e) => setChecked5(!checked5)} />

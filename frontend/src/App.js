@@ -146,7 +146,7 @@ export const App = () => {
                 <img
                   alt="Product Image"
                   src={el.IMG_LINK}
-                  className="w-60 h-60 object-center object-contain  lg:w-full lg:h-full"
+                  className="w-60 h-60 object-center object-contain  lg:w-96 lg:h-full"
                 />
               </div>
               <div className="flex justify-between p-2">
@@ -290,14 +290,22 @@ dark:focus:ring-blue-500 align-items: flex-end  dark:focus:border-blue-500" />
           src={adminImage}
           className=" inline pr-800 w-5 h-5 "
         /></button>
-           <select id="arrayDropdown" >
-           <option className="flex bg-white rounded-full px-2 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2" onClick={() => { getAllProducts() }}>Clear</option>
-           {(Categories) ? <p className='text-white'>Tags : </p> : ''}
-            {
-              
-              Categories.map(tag => <option key={tag} className="flex bg-white rounded-full px-2 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2" onClick={() => { handleClick(tag) }}>{tag}</option>)
+        
+        <div class="dropdown">
+  <button class="dropbtn">Tags</button>
+  <div class="dropdown-content">
+  <ul> <a className="flex bg-amber-600 rounded-full px-2 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2" onClick={() => { getAllProducts() }}>Clear</a></ul>
+            
+  {
+              Categories.map(tag => <ul><a  className="flex bg-grey rounded-full p-1 text-sm font-semibold text-gray-700 " onClick={() => { handleClick(tag) }}>{tag}</a></ul>)
             }
-           </select>
+  </div>
+</div> 
+        
+          
+           
+
+
 
         <div class="text-center">
    
@@ -319,8 +327,7 @@ dark:focus:ring-blue-500 align-items: flex-end  dark:focus:border-blue-500" />
       </div>
   );
   }
- 
-     
+
       
    
   const productPage = (<div>

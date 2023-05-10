@@ -15,7 +15,7 @@ mongoose.connect("mongodb+srv://jjkruse:root@products.p82ujgz.mongodb.net/test?a
     }
 );
 const port = process.env.PORT || 4000;
-const host = "localhost";
+const host = "10.49.84.39";
 
 
 app.get("/", async (req, resp) => {

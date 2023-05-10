@@ -21,7 +21,7 @@ export const App = () => {
   const [state, setstate] = useState('products');
   const [Categories, setCategory] = useState([]);
   function getAllProducts() {
-    fetch("http://localhost:4000/")
+    fetch("http://10.49.84.39:4000/")
       .then((response) => response.json())
       .then((data) => {
         console.log("Show Catalog of Products :");
@@ -30,7 +30,7 @@ export const App = () => {
       });
   }
   function getAllCategory() {
-    fetch("http://localhost:4000/cat/tag")
+    fetch("http://10.49.84.39:4000/cat/tag")
       .then((response) => response.json())
       .then((data) => {
         console.log("Show Catalog of Products :");
@@ -219,7 +219,7 @@ export const App = () => {
 
   function handleClick(tag) {
     console.log(tag);
-    fetch("http://localhost:4000/" + "tag/" + tag)
+    fetch("http://10.49.84.39:4000/" + "tag/" + tag)
       .then((response) => response.json())
       .then((data) => {
         console.log("Show one product :", tag);
@@ -231,13 +231,13 @@ export const App = () => {
 
   const handleChange = (e) => {
     console.log("change" + e);
-    console.log("http://localhost:4000/" + e.target.value);
+    console.log("http://10.49.84.39:4000/" + e.target.value);
     if (e.target.value == '') {
       setQuery('');
       getAllProducts();
     } else {
       setQuery(e.target.value);
-      fetch("http://localhost:4000/" + e.target.value)
+      fetch("http://10.49.84.39:4000/" + e.target.value)
         .then((response) => response.json())
         .then((data) => {
           console.log("Show one product :", e);
@@ -724,7 +724,7 @@ dark:focus:ring-blue-500 align-items: flex-end  dark:focus:border-blue-500" />
   function handleOnAdminSubmit(e) {
     e.preventDefault();
     console.log(e.target.value);
-    fetch("http://localhost:4000/insert", {
+    fetch("http://10.49.84.39:4000/insert", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(addNewProduct),
@@ -765,7 +765,7 @@ dark:focus:ring-blue-500 align-items: flex-end  dark:focus:border-blue-500" />
 
   function deleteOneProduct(deleteid) {
     console.log("Product to delete :", deleteid);
-    fetch("http://localhost:4000/delete/", {
+    fetch("http://10.49.84.39:4000/delete/", {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ _id: deleteid }),
@@ -792,7 +792,7 @@ dark:focus:ring-blue-500 align-items: flex-end  dark:focus:border-blue-500" />
   function updateOneProduct(e) {
     e.preventDefault();
     //console.log(e.target.value);
-    fetch("http://localhost:4000/update", {
+    fetch("http://10.49.84.39:4000/update", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updateProduct),

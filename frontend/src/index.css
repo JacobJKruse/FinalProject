@@ -75,6 +75,7 @@ body{
   box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 1rem;
   border: transparent;
+  
 }
 @media(max-width:767px){
   .card{
@@ -277,6 +278,7 @@ a:hover{
   font-size: x-large;
   padding: 30px 30px;
   visibility: hidden;
+  overflow: scroll;
   transition: transform 0.4s, top 0.4s;
 }
 .open-popup{

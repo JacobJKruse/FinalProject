@@ -80,17 +80,17 @@ export const App = () => {
 
   }
   function handleShowHideCart() {
-    
-    
-   
-    
+
+
+
+
   }
   function handleshowPurchase() {
     if (cart.length > 0) {
-      setShowCart(!showCart);
+      setstate("cart");
     } else { window.alert("No items in cart"); }
   }
-  
+
   useEffect(() => {
     total();
   }, [cart]);
@@ -134,7 +134,7 @@ export const App = () => {
 
     return <div className='category-section filled'>
       {console.log("Step 3 : in render_products ")}
-      
+
       <div className="m-0 p-3 mt-0 ml-0 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-4 lg:grid-cols-4 xl:gap-x-10" style={{ maxHeight: '100%', overflowY: 'auto' }}>
         {/* Loop Products */}
         {ProductsCategory.map((el, index) => (
@@ -160,7 +160,7 @@ export const App = () => {
 
                   <p className="mt-1 text-sm text-gray-500">Rating: {el.RATING} %</p>
                   <p className="text-sm font-medium text-green-600 text-left">${el.PRICE}</p>
-                  <button type="button" class="btn" variant="light" onClick={() => addToCart(el)}>Add To Cart<img src={cartImage} class="cartImage inline"></img></button>
+                  <button type="button" class=" p-5  rounded-lg outline-black-500  border-2 hover:bg-slate-200" variant="light" onClick={() => addToCart(el)}>Add To Cart<img src={cartImage} class="cartImage inline"></img></button>
                 </div>
 
               </div>
@@ -181,28 +181,30 @@ export const App = () => {
     <div>
       <div class="row border-top border-bottom" key={el._id}>
         <div class="row main align-items-center">
-          <div class="col-2">
-            <img class="img-fluid" src={el.IMG_LINK} />
+          <div class="mb-5 shadow-lg ">
+          
+            <img class="border-2 border-slate-500 mr-5" src={el.IMG_LINK} />
+            <div>
+            <div>
+            <div class=" text-muted">{el.PRODUCT_NAME}</div>
+            <div class="">{el.CATEGORY}</div>
+            <div>${el.PRICE} <span class="close">&#10005;</span>{howManyofThis(el._id)}</div>
+            <button type="button" class="border-2  border-bottom border-slate-500 mr-5 hover:bg-slate-200" variant="heavy" onClick={() => removeFromCart(el)} > Remove </button>{" "}
+            <button type="button" variant="heavy" class="border-2 border-slate-500 px-3 hover:bg-slate-200" onClick={() => addToCart(el)}> + </button>
+            </div>
+           
+            </div>
+           
           </div>
-          <div class="col">
-            <div class="row text-muted">{el.PRODUCT_NAME}</div>
-            <div class="row">{el.CATEGORY}</div>
-          </div>
-          <div class="col">
-            <button type="button" variant="heavy" onClick={() => removeFromCart(el)} > - </button>{" "}
-            <button type="button" variant="heavy" onClick={() => addToCart(el)}> + </button>
-          </div>
-          <div class="col">
-            ${el.PRICE} <span class="close">&#10005;</span>{howManyofThis(el._id)}
-          </div>
+          
         </div>
       </div>
     </div>
   ));
   const listItemsList = res.map((el) => (
     // PRODUCT
-    <div>
-      <div class="row border-top border-bottom" key={el._id}>
+    <div class=" ">
+      <div class=" row border-top border-bottom " key={el._id}>
         <div class="row main align-items-center">
 
           <div class="col">
@@ -218,193 +220,181 @@ export const App = () => {
   ));
 
 
-  
+
 
   function handleClick(tag) {
     console.log(tag);
-    fetch("http://localhost:4000/"+ "tag/"+ tag)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Show one product :", tag);
-      console.log(data);
-      setProductsCategory(data);
-    });
+    fetch("http://localhost:4000/" + "tag/" + tag)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Show one product :", tag);
+        console.log(data);
+        setProductsCategory(data);
+      });
   }
 
 
   const handleChange = (e) => {
-    console.log("change"+e);
-    console.log("http://localhost:4000/"+ e.target.value);
-    if(e.target.value == ''){
+    console.log("change" + e);
+    console.log("http://localhost:4000/" + e.target.value);
+    if (e.target.value == '') {
       setQuery('');
       getAllProducts();
-    }else{
-    setQuery(e.target.value);
-    fetch("http://localhost:4000/"+ e.target.value)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Show one product :", e);
-      console.log(data);
-      setProductsCategory(data);
-    });
-  }
-  }
-/* When the user clicks on the button, 
-toggle between hiding and showing the dropdown content */
-function myFunction() {
-  document.getElementById("myDropdown").classList.toggle("show");
-}
-
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
+    } else {
+      setQuery(e.target.value);
+      fetch("http://localhost:4000/" + e.target.value)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Show one product :", e);
+          console.log(data);
+          setProductsCategory(data);
+        });
     }
   }
-}
+
 
   const newProductPage = () => {
-    
-  return(
-    <div class="flex">
-    <nav className="fixed z-10">
-      <div className="w-screen  bg-slate-800 pt-2 pb-2 xl:basis-1/5 "  style={{ minWidth: '65%' }}>
-      <div className="flex justify-normal"><img className="w-56 " src={logo} alt="16-Bit Shop logo" />
-      <input type="search" placeholder="Search"  onChange={handleChange} className="mt-3  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+
+    return (
+      <div class="flex">
+        <nav className="fixed z-10">
+          <div className="w-screen  bg-slate-800 pt-2 pb-2 xl:basis-1/5 " style={{ minWidth: '65%' }}>
+            <div className="flex justify-normal"><img className="w-56 " src={logo} alt="16-Bit Shop logo" />
+              <input type="search" placeholder="Search" onChange={handleChange} className="mt-3  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
 focus:ring-blue-500 focus:border-blue-500 block w-80 p-2.5 dark:bg-gray-700
 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
 dark:focus:ring-blue-500 align-items: flex-end  dark:focus:border-blue-500" />
-<button type="button" className=" border-solid bg-white rounded-lg border-2 border-neutral-50 mx-20 px-5" variant="light" onClick={() => handleShowHideCart()}> Cart<img
-          alt="cart Image"
-          src={cartImage}
-          className=" inline pr-800 w-5 h-5 "
-        /></button>
-       <button type="button" className="border-solid bg-white rounded-lg border-2 border-neutral-50 mx-6 px-5 " variant="light" onClick={() => setstate('admin')}> admin<img
-          alt="admin Image"
-          src={adminImage}
-          className=" inline pr-800 w-5 h-5 "
-        /></button>
-        
-        <div class="dropdown">
-  <button class="dropbtn">Tags</button>
-  <div class="dropdown-content">
-  <ul> <a className="flex bg-amber-600 rounded-full px-2 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2" onClick={() => { getAllProducts() }}>Clear</a></ul>
-            
-  {
-              Categories.map(tag => <ul><a  className="flex bg-grey rounded-full p-1 text-sm font-semibold text-gray-700 " onClick={() => { handleClick(tag) }}>{tag}</a></ul>)
-            }
-  </div>
-</div> 
-        
-          
-           
+              <button type="button" className=" border-solid bg-white rounded-lg border-2 border-neutral-50 mx-20 px-5 hover:bg-slate-200" variant="light" onClick={() => handleshowPurchase()}> Cart<img
+                alt="cart Image"
+                src={cartImage}
+                className=" inline pr-800 w-5 h-5 "
+              /></button>
+              <button type="button" className="border-solid bg-white rounded-lg border-2 border-neutral-50 mx-6 px-5 hover:bg-slate-200" variant="light" onClick={() => setstate('admin')}> admin<img
+                alt="admin Image"
+                src={adminImage}
+                className=" inline pr-800 w-5 h-5 "
+              /></button>
+
+              <div class="dropdown">
+                <button class="dropbtn">Tags</button>
+                <div class="dropdown-content">
+                  <ul> <a className="flex bg-amber-600 rounded-full px-2 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2" onClick={() => { getAllProducts() }}>Clear</a></ul>
+
+                  {
+                    Categories.map(tag => <ul><a className="flex bg-grey rounded-full p-1 text-sm font-semibold text-gray-700 " onClick={() => { handleClick(tag) }}>{tag}</a></ul>)
+                  }
+                </div>
+              </div>
 
 
 
-        <div class="text-center">
-   
-</div>
-</div>
+
+
+
+              <div class="text-center">
+
+              </div>
+            </div>
+          </div>
+        </nav>
+        <div className="w-full pt-24">
+          {console.log("Before render :", items.length, ProductsCategory.length)}
+          {render_products(ProductsCategory)}
+                  
+
+
+
+
+        </div>
+
+
+
       </div>
-    </nav>
-    <div className="w-full pt-24">
-        {console.log("Before render :", items.length, ProductsCategory.length)}
-        {render_products(ProductsCategory)}
-       
-        
-
-
-      </div>
-     
-      
-         
-      </div>
-  );
+    );
   }
 
-      
-   
-  const productPage = (<div>
- 
-  
-    <div className="flex fixed flex-row w-26">
-      {console.log("Step 2 : Return App :", items.length, items.length)}
-      <div className="h-screen  bg-slate-800 p-3 xl:basis-1/5" style={{ minWidth: '65%' }}>
-        <img className="w-20" src={logo} alt="16-Bit Shop logo" />
-        <div className="px-2 py-4">
-          <h1 className="text-3xl mb-2 font-bold text-white"> Phase 2 16-Bit Shop </h1>
-          <p className="text-gray-700 text-white">
-            by - <b style={{ color: 'white' }}>Jacob Kruse, Oscar Lenkaitis</b>
-          </p>
-          <div className="py-18">
-          
-            <input type="search" placeholder="Search"  onChange={handleChange} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
-dark:border-gray-600 dark:placeholder-gray-400 dark:text-white
-dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-          </div>
-          <div className="py-5">
-          <btn className="flex bg-amber-600 rounded-full px-2 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2" onClick={() => { getAllProducts() }}>Clear</btn>
-            {(Categories) ? <p className='text-white'>Tags : </p> : ''}
-            {
-              Categories.map(tag => <button key={tag} className="flex bg-amber-600 rounded-full px-2 py-1 text-sm font-semibold text-gray-700 mr-2 mt-2" onClick={() => { handleClick(tag) }}>{tag}</button>)
-            }
-          </div>
-        </div>
-      </div>
-      <div className="w-full">
-        {console.log("Before render :", items.length, ProductsCategory.length)}
-        {render_products(ProductsCategory)}
-      </div>
-    </div>
-  </div>);
 
-  const cartPage = (<div>
-    STORE SE/ComS319
-    <div class="card fixed items-center">
-      <div class="row">
-        {/* HERE, IT IS THE SHOPING CART */}
-        <div class="col-md-8 cart">
-          <div class="title">
-            <div class="row">
-              <div class="col">
-                <h4>
-                  <b>319 Shopping Cart</b>
-                  <span class="inline"><button type="button" class="btn" variant="light" onClick={() => setstate("products")}> Return to Shop<img
+
+  const newCartPage = () => {
+  return (
+    <div className=" ">
+    <h1 class="text-center text-4xl bg-slate-100 rounded-lg w-screen ">CART</h1>
+    
+      <div class ="max-w-sm mb-10 rounded overflow-hidden shadow-lg  m-auto pt-10 mt-10 border-2 col">
+      <span class="border-2 p-2 mt-2 rounded-lg   grid place-items-center hover:bg-slate-200 ">
+    <button type="button"  variant="light" onClick={() => setstate("products")}> Return to Shop
+    <img
                     alt="cart Image"
                     src={cartImage}
                     className=" inline pr-800 w-5 h-5 "
                   /></button></span>
-                </h4>
-              </div>
-              <div class="col align-self-center text-right text-muted">
-                Products selected {cart.length}
-              </div>
-            </div>
-          </div>
-          <div>{listItems}</div>
-        </div>
-        <div class="float-end">
+      {cart.length>=0 &&<div>
+
+          {listItems}</div>}
+          {cart.length<=0 &&<div><h1>YOUR CART IS EMPTY</h1></div>}
+
+          <div class="float-end">
           <p class="mb-0 me-5 d-flex align-items-center">
-            <span class="small text-muted me-2">Order total:</span>
-            <span class="lead fw-normal">${cartTotal}</span>
+            <span class="text-lg text-muted me-2">Order total:</span>
+            <span class="lead text-lg fw-normal">${cartTotal}</span>
 
           </p>
-          <span class="inline"><button type="button" class="btn" variant="light" onClick={() => setstate("checkout")}> Proceed to Checkout<img
+          <span class="inline"><button type="button" class="border-2 mb-5  mx-24 p-2 rounded-lg hover:bg-slate-200 " variant="light" onClick={() => setstate("checkout")}> Proceed to Checkout<img
             alt="cart Image"
             src={cartImage}
             className=" inline pr-800 w-5 h-5 "
           /></button></span>
         </div>
       </div>
+      
     </div>
-  </div>);
+  );
+  }
+
+  // const cartPage = (<div>
+  //   STORE SE/ComS319
+  //   <div class="card">
+  //     <div class="row">
+  //       {/* HERE, IT IS THE SHOPING CART */}
+  //       <div class="col-md-8 cart">
+  //         <div class="title">
+  //           <div class="row">
+  //             <div class="col">
+  //               <h4>
+  //                 <b>319 Shopping Cart</b>
+  //                 <span class="inline"><button type="button" class="btn" variant="light" onClick={() => setstate("products")}> Return to Shop<img
+  //                   alt="cart Image"
+  //                   src={cartImage}
+  //                   className=" inline pr-800 w-5 h-5 "
+  //                 /></button></span>
+  //               </h4>
+  //             </div>
+  //             <div class="col align-self-center text-right text-muted">
+  //               Products selected {cart.length}
+  //             </div>
+  //           </div>
+  //         </div>
+          
+  //         <div>
+  //         {cart.length<=0 && <h1>YOUR CART IS EMPTY</h1>}
+  //         {listItems}</div>
+  //       </div>
+  //       <div class="float-end">
+  //         <p class="mb-0 me-5 d-flex align-items-center">
+  //           <span class="small text-muted me-2">Order total:</span>
+  //           <span class="lead fw-normal">${cartTotal}</span>
+
+  //         </p>
+  //         <span class="inline"><button type="button" class="btn" variant="light" onClick={() => setstate("checkout")}> Proceed to Checkout<img
+  //           alt="cart Image"
+  //           src={cartImage}
+  //           className=" inline pr-800 w-5 h-5 "
+  //         /></button></span>
+  //       </div>
+  //     </div>
+  //   </div>
+  // </div>);
+
 
   function isNumeric(n) {
     return !isNaN(parseFloat(n)) && isFinite(n)
@@ -528,16 +518,7 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
     let switch1 = document.getElementById("switch");
     switch1.classList.add("hide-switch");
   }
-  function displayPopupCart() {
-    if(showCart === true){
-    let popup = document.getElementById("popupCart");
-    popup.classList.add("open-popup");
-    }else{
-      let popup = document.getElementById("popupCart");
-    popup.classList.add("close-popup");
-    }
-    
-  }
+  
   function displayReceipt() {
     let popup = document.getElementById("Receipt");
     popup.classList.add("open-popup");
@@ -549,21 +530,21 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
 
     return (
       <div >
-      <link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-  integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-  crossorigin="anonymous"
-/>
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+          crossorigin="anonymous"
+        />
         <div>
-          <div class="popup" id="popup">
+          <div class="popup " id="popup">
             <h1>Thank You</h1>
             <img src={checkmark} ></img>
             <p>Shipping Information:<br></br>{paymentInfo.name}<br></br>{paymentInfo.address}<br></br>{paymentInfo.city} {paymentInfo.state} {paymentInfo.zip}</p>
             <button type="button" className='btn' id="showReceipt" onClick={() => displayReceipt()} >Show Receipt</button>
             <button type="button" className='btn' onClick={() => window.location.reload(false)} >Return to Store</button>
           </div>
-          <div class="Receipt" id="Receipt">
+          <div class="Receipt " id="Receipt">
             <h1>Receipt</h1>
             <p>Receipt:<br></br>Cost:{cartTotal}<br></br>{listItemsList}</p>
             <button type="button" className='btn' onClick={() => window.location.reload(false)} >Return to Store</button>
@@ -571,11 +552,18 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
           <div id="switch">
             <h1>Payment:</h1>
             <div>
-              <span class="inline"><button type="button" class="btn" variant="light" onClick={() => setstate("cart")}> Return to cart<img
+            <div class="grid grid-cols-2 gap-4 place-content-center  m-5 ">
+              <span class="border-2 text-center h-10 hover:bg-slate-100 "><button type="button" class=" " variant="light" onClick={() => setstate("cart")}> Return to cart<img
                 alt="cart Image"
                 src={cartImage}
                 className=" inline pr-800 w-5 h-5 "
               /></button></span>
+              <span class="border-2 text-center hover:bg-slate-100 "><button type="button" class="  " variant="light" onClick={() => setstate("products")}> Return to Prodcuts<img
+                alt="cart Image"
+                src={cartImage}
+                className=" inline pr-800 w-5 h-5 "
+              /></button></span>
+</div>
               <div className="row">
                 <div className="col-2"></div>
 
@@ -688,7 +676,7 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
   const [checked4, setChecked4] = useState(false);
   const [checked5, setChecked5] = useState(false);
   const [index, setIndex] = useState(0);
- 
+
 
 
 
@@ -699,7 +687,7 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
     _id: 0,
     PRODUCT_NAME: "No Product Name",
     PRICE: 0.0,
-    PRODUCT_DESC: "No Description", 
+    PRODUCT_DESC: "No Description",
     CATEGORY: "No Category",
     PRODUCT_RELEASE_DATE: 0,
     IMG_LINK: "http://127.0.0.1:4000/images/noImage.jpg",
@@ -709,7 +697,7 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
     _id: 0,
     PRODUCT_NAME: "No Product Name",
     PRICE: 0.0,
-    PRODUCT_DESC: "No Description", 
+    PRODUCT_DESC: "No Description",
     CATEGORY: "No Category",
     PRODUCT_RELEASE_DATE: 0,
     IMG_LINK: "http://127.0.0.1:4000/images/noImage.jpg",
@@ -720,59 +708,60 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
   function handleAdminChange(evt) {
     const value = evt.target.value;
     if (evt.target.name === "_id") {
-      if (value === ""){
+      if (value === "") {
         setAddNewProduct({ ...addNewProduct, _id: defaultaddNewProduct._id });
-      }else{
-      setAddNewProduct({ ...addNewProduct, _id: value });
+      } else {
+        setAddNewProduct({ ...addNewProduct, _id: value });
       }
     } else if (evt.target.name === "PRODUCT_NAME") {
-      if (value === ""){
+      if (value === "") {
         setAddNewProduct({ ...addNewProduct, PRODUCT_NAME: defaultaddNewProduct.PRODUCT_NAME });
-      }else{
-      setAddNewProduct({ ...addNewProduct, PRODUCT_NAME: value });
+      } else {
+        setAddNewProduct({ ...addNewProduct, PRODUCT_NAME: value });
       }
     } else if (evt.target.name === "PRICE") {
-      if (value === ""){
+      if (value === "") {
         setAddNewProduct({ ...addNewProduct, PRICE: defaultaddNewProduct.PRICE });
-      }else{
-      setAddNewProduct({ ...addNewProduct, PRICE: value });
+      } else {
+        setAddNewProduct({ ...addNewProduct, PRICE: value });
       }
     } else if (evt.target.name === "PRODUCT_DESC") {
-      if (value === ""){
+      if (value === "") {
         setAddNewProduct({ ...addNewProduct, PRODUCT_DESC: defaultaddNewProduct.PRODUCT_DESC });
-      }else{
-      setAddNewProduct({ ...addNewProduct, PRODUCT_DESC: value });
+      } else {
+        setAddNewProduct({ ...addNewProduct, PRODUCT_DESC: value });
       }
     } else if (evt.target.name === "CATEGORY") {
-      if (value === ""){
+      if (value === "") {
         setAddNewProduct({ ...addNewProduct, CATEGORY: defaultaddNewProduct.CATEGORY });
-      }else{
-        if(!Categories.includes(value)){
-          
-            Categories.push(value);
-          
+      } else {
+        if (!Categories.includes(value)) {
+
+          Categories.push(value);
+
         }
-      setAddNewProduct({ ...addNewProduct, CATEGORY: value });}
+        setAddNewProduct({ ...addNewProduct, CATEGORY: value });
+      }
     } else if (evt.target.name === "IMG_LINK") {
       const temp = value;
-      if (value === ""){
+      if (value === "") {
         setAddNewProduct({ ...addNewProduct, IMG_LINK: defaultaddNewProduct.IMG_LINK });
-      }else{
-      setAddNewProduct({ ...addNewProduct, IMG_LINK: temp });
+      } else {
+        setAddNewProduct({ ...addNewProduct, IMG_LINK: temp });
       }
     } else if (evt.target.name === "RATING") {
-      if (value === ""){
+      if (value === "") {
         setAddNewProduct({ ...addNewProduct, RATING: defaultaddNewProduct.RATING });
-      }else{
-      setAddNewProduct({ ...addNewProduct, RATING: value });
+      } else {
+        setAddNewProduct({ ...addNewProduct, RATING: value });
       }
     }
     else if (evt.target.name === "PRODUCT_RELEASE_DATE") {
-      if (value === ""){
+      if (value === "") {
         setAddNewProduct({ ...addNewProduct, PRODUCT_RELEASE_DATE: defaultaddNewProduct.PRODUCT_RELEASE_DATE });
       }
-      else{
-      setAddNewProduct({ ...addNewProduct, PRODUCT_RELEASE_DATE: value });
+      else {
+        setAddNewProduct({ ...addNewProduct, PRODUCT_RELEASE_DATE: value });
       }
     }
   }
@@ -836,6 +825,7 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
           alert(value);
         }
       });
+     
     setChecked4(!checked4);
   }
 
@@ -844,91 +834,91 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500" />
     e.preventDefault();
     //console.log(e.target.value);
     fetch("http://localhost:4000/update", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updateProduct),
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updateProduct),
     })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log("Update product completed");
-            console.log(data);
-            if (data) {
-                //const keys = Object.keys(data);
-                const value = Object.values(data);
-                alert(value);
-            }
-        });
-}
-const [updateProduct, setUpdateProduct] = useState ({
-  _id: 0,
-  IMG_LINK:"http://127.0.0.1:4000/images/noImage.jpg",
-  PRICE: 0,
-  PRODUCT_DESC:"No Updated Description",
-  PRODUCT_NAME: "No Updated Product Name",
-  PRODUCT_RELEASE_DATE: 0,
-  RATING: 0,
-
-});
-
-function updateChange(evt) {
-  const value = evt.target.value;
-  if (evt.target.name === "_id") {
-      setUpdateProduct({...updateProduct, _id: value });
-  } 
-  else if (evt.target.name === "price") {
-    
-      setUpdateProduct({ ...updateProduct, PRICE: value });
-    
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Update product completed");
+        console.log(data);
+        if (data) {
+          //const keys = Object.keys(data);
+          const value = Object.values(data);
+          alert(value);
+        }
+      });
   }
-  else if (evt.target.name === "description") {
-    setUpdateProduct({ ...updateProduct, PRODUCT_DESC: value });
-}
-else if (evt.target.name === "image") {
-  setUpdateProduct({ ...updateProduct, IMG_LINK: value });
-}
-else if (evt.target.name === "rating") {
-  setUpdateProduct({ ...updateProduct, RATING: value });
-}
-else if (evt.target.name === "name") {
-  setUpdateProduct({ ...updateProduct, PRODUCT_NAME: value });
-}
-else if (evt.target.name === "date") {
-  setUpdateProduct({ ...updateProduct, PRODUCT_RELEASE_DATE: value });
-}
-}
-const showAllItems = ProductsCategory.map((el) => (
-  <div key={el._id}>
-    <img src={el.IMG_LINK} width={30} /> <br />
-    Title: {el.PRODUCT_NAME} <br />
-    Category: {el.CATEGORY} <br />
-    Price: {el.PRICE} <br />
-    Rate :{el.RATING} <br />
-  </div>
-));
+  const [updateProduct, setUpdateProduct] = useState({
+    _id: 0,
+    IMG_LINK: "http://127.0.0.1:4000/images/noImage.jpg",
+    PRICE: 0,
+    PRODUCT_DESC: "No Updated Description",
+    PRODUCT_NAME: "No Updated Product Name",
+    PRODUCT_RELEASE_DATE: 0,
+    RATING: 0,
+
+  });
+
+  function updateChange(evt) {
+    const value = evt.target.value;
+    if (evt.target.name === "_id") {
+      setUpdateProduct({ ...updateProduct, _id: value });
+    }
+    else if (evt.target.name === "price") {
+
+      setUpdateProduct({ ...updateProduct, PRICE: value });
+
+    }
+    else if (evt.target.name === "description") {
+      setUpdateProduct({ ...updateProduct, PRODUCT_DESC: value });
+    }
+    else if (evt.target.name === "image") {
+      setUpdateProduct({ ...updateProduct, IMG_LINK: value });
+    }
+    else if (evt.target.name === "rating") {
+      setUpdateProduct({ ...updateProduct, RATING: value });
+    }
+    else if (evt.target.name === "name") {
+      setUpdateProduct({ ...updateProduct, PRODUCT_NAME: value });
+    }
+    else if (evt.target.name === "date") {
+      setUpdateProduct({ ...updateProduct, PRODUCT_RELEASE_DATE: value });
+    }
+  }
+  const showAllItems = ProductsCategory.map((el) => (
+    <div key={el._id}>
+      <img src={el.IMG_LINK} width={30} /> <br />
+      Title: {el.PRODUCT_NAME} <br />
+      Category: {el.CATEGORY} <br />
+      Price: {el.PRICE} <br />
+      Rate :{el.RATING} <br />
+    </div>
+  ));
 
   const displayAdminPage = () => {
-  return (
-    <div className="bg-emerald-200">
-    <link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-  integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-  crossorigin="anonymous"
-/>
-      <h1>Admin Page</h1>
-      <button type="button" className=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300" variant="light" onClick={() => window.location.reload(false)}> Exit<img
+    return (
+      <div className="bg-emerald-200">
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+          crossorigin="anonymous"
+        />
+        <h1>Admin Page</h1>
+        <button type="button" className=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300" variant="light" onClick={() => window.location.reload(false)}> Exit<img
           alt="admin Image"
           src={cartImage}
           className=" inline pr-800 w-5 h-5 "
         /></button>
-      <h1>Display Product Information</h1>
-      <input type="checkbox" id="acceptdelete" name="acceptdelete" checked={checked5}
+        <h1>Display Product Information</h1>
+        <input type="checkbox" id="acceptdelete" name="acceptdelete" checked={checked5}
           onChange={(e) => setChecked5(!checked5)} />
-      <button className=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300"  onClick={() => getOneByOneProductPrev()}>Prev</button>
-        <button  className=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300" onClick={() => getOneByOneProductNext()}>Next</button>
+        <button className=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300" onClick={() => getOneByOneProductPrev()}>Prev</button>
+        <button className=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300" onClick={() => getOneByOneProductNext()}>Next</button>
         {checked5 && (
           <div key={ProductsCategory[index]._id}>
-            <img  class="h-1/6 w-1/6 mt-5"src={ProductsCategory[index].IMG_LINK} width={50} height={50} /> <br />
+            <img class="h-1/6 w-1/6 mt-5" src={ProductsCategory[index].IMG_LINK} width={50} height={50} /> <br />
             Id:{ProductsCategory[index]._id} <br />
             Title: {ProductsCategory[index].PRODUCT_NAME} <br />
             Category: {ProductsCategory[index].CATEGORY} <br />
@@ -938,13 +928,13 @@ const showAllItems = ProductsCategory.map((el) => (
             Rate :{ProductsCategory[index].RATING}  <br />
           </div>
         )}
-      <hr></hr>
-     
-      <div class=" ">
-      <h1>Add a new product :</h1>
-      <h3>All Boxes must be filled out</h3>
-      <div key={addNewProduct._id}>
-            <img  class="h-1/6 w-1/6 mt-5"src={addNewProduct.IMG_LINK} width={50} height={50} /> <br />
+        <hr></hr>
+
+        <div class=" ">
+          <h1>Add a new product :</h1>
+          <h3>All Boxes must be filled out</h3>
+          <div key={addNewProduct._id}>
+            <img class="h-1/6 w-1/6 mt-5" src={addNewProduct.IMG_LINK} width={50} height={50} /> <br />
             Id:{addNewProduct._id} <br />
             Title: {addNewProduct.PRODUCT_NAME} <br />
             Category: {addNewProduct.CATEGORY} <br />
@@ -953,95 +943,95 @@ const showAllItems = ProductsCategory.map((el) => (
             Price: {addNewProduct.PRICE} <br />
             Rate :{addNewProduct.RATING}  <br />
           </div>
-        <form action="" className="  mx-5   gap-10 place-content-center  grid-col-1" >
-        <input type="number" className="bg-emerald-100 w-50  place-content-center" placeholder="id?" name="_id"  onChange={handleAdminChange} />
-          
-          
-          <input type="text" placeholder="title?" className="bg-emerald-100 w-50  " name="PRODUCT_NAME"  onChange={handleAdminChange} />
-          <input type="number" placeholder="price?" className="bg-emerald-100 w-50 " name="PRICE"  onChange={handleAdminChange} />
-          <input type="text" placeholder="description?" className="bg-emerald-100 w-50 " name="PRODUCT_DESC"  onChange={handleAdminChange} />
-          <input type="text" placeholder="category?"  className="bg-emerald-100 w-50 " name="CATEGORY"  onChange={handleAdminChange} />
-          <input type="text" placeholder="image?"  className="bg-emerald-100 w-50 " name="IMG_LINK"  onChange={handleAdminChange} />
-          <input type="number" placeholder="rate?"  className="bg-emerald-100 w-50 " name="RATING"  onChange={handleAdminChange} />
-          <input type="number" placeholder="release date year?"  className="bg-emerald-100 w-50 " name="PRODUCT_RELEASE_DATE"  onChange={handleAdminChange} />
-        </form>
-        <button type="submit" className=" place-content-center w-20 h-10 rounded-full mx-20 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300" onClick={handleOnAdminSubmit}>
+          <form action="" className="  mx-5   gap-10 place-content-center  grid-col-1" >
+            <input type="number" className="bg-emerald-100 w-50  place-content-center" placeholder="id?" name="_id" onChange={handleAdminChange} />
+
+
+            <input type="text" placeholder="title?" className="bg-emerald-100 w-50  " name="PRODUCT_NAME" onChange={handleAdminChange} />
+            <input type="number" placeholder="price?" className="bg-emerald-100 w-50 " name="PRICE" onChange={handleAdminChange} />
+            <input type="text" placeholder="description?" className="bg-emerald-100 w-50 " name="PRODUCT_DESC" onChange={handleAdminChange} />
+            <input type="text" placeholder="category?" className="bg-emerald-100 w-50 " name="CATEGORY" onChange={handleAdminChange} />
+            <input type="text" placeholder="image?" className="bg-emerald-100 w-50 " name="IMG_LINK" onChange={handleAdminChange} />
+            <input type="number" placeholder="rate?" className="bg-emerald-100 w-50 " name="RATING" onChange={handleAdminChange} />
+            <input type="number" placeholder="release date year?" className="bg-emerald-100 w-50 " name="PRODUCT_RELEASE_DATE" onChange={handleAdminChange} />
+          </form>
+          <button type="submit" className=" place-content-center w-20 h-10 rounded-full mx-20 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300" onClick={handleOnAdminSubmit}>
             submit
-          </button> 
-      </div>
-      <hr></hr>
-     
-      <div class="mb-32 ps-20">
-        <h3>Delete one product:</h3>
-        
-         <div>
-         <input type="checkbox" id="acceptdelete" name="acceptdelete" checked={checked4}
-          onChange={(e) => setChecked4(!checked4)} />
+          </button>
+        </div>
+        <hr></hr>
+
+        <div class="mb-32 ps-20">
+          <h3>Delete one product:</h3>
+
+          <div>
+            <input type="checkbox" id="acceptdelete" name="acceptdelete" checked={checked4}
+              onChange={(e) => setChecked4(!checked4)} />
             <p className="">Check to Activate</p>
           </div>
-        <button className=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300"  onClick={() => getOneByOneProductPrev()}>Prev</button>
-        <button  className=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300" onClick={() => getOneByOneProductNext()}>Next</button>
-        <button className=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300" onClick={() => deleteOneProduct(ProductsCategory[index]._id)}>Delete</button>
-        {checked4 && (
-          <div key={ProductsCategory[index]._id}>
-            <img  class="h-1/6 w-1/6 mt-5"src={ProductsCategory[index].IMG_LINK} width={50} height={50} /> <br />
-            Id:{ProductsCategory[index]._id} <br />
-            Title: {ProductsCategory[index].PRODUCT_NAME} <br />
-            Category: {ProductsCategory[index].CATEGORY} <br />
-            Description: {ProductsCategory[index].PRODUCT_DESC} <br />
-            Date: {ProductsCategory[index].PRODUCT_RELEASE_DATE} <br />
-            Price: {ProductsCategory[index].PRICE} <br />
-            Rate :{ProductsCategory[index].RATING}  <br />
-          </div>
-        )}
+          <button className=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300" onClick={() => getOneByOneProductPrev()}>Prev</button>
+          <button className=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300" onClick={() => getOneByOneProductNext()}>Next</button>
+          <button className=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300" onClick={() => deleteOneProduct(ProductsCategory[index]._id)}>Delete</button>
+          {checked4 && (
+            <div key={ProductsCategory[index]._id}>
+              <img class="h-1/6 w-1/6 mt-5" src={ProductsCategory[index].IMG_LINK} width={50} height={50} /> <br />
+              Id:{ProductsCategory[index]._id} <br />
+              Title: {ProductsCategory[index].PRODUCT_NAME} <br />
+              Category: {ProductsCategory[index].CATEGORY} <br />
+              Description: {ProductsCategory[index].PRODUCT_DESC} <br />
+              Date: {ProductsCategory[index].PRODUCT_RELEASE_DATE} <br />
+              Price: {ProductsCategory[index].PRICE} <br />
+              Rate :{ProductsCategory[index].RATING}  <br />
+            </div>
+          )}
+        </div>
+        <hr></hr>
+        <div class="mt-20">
+          <h1>Update Product Price</h1>
+          <h3>All Boxes must be filled out</h3>
+          <button className=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300" onClick={() => getOneByOneProductPrev()}>Prev</button>
+          <button className=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300" onClick={() => getOneByOneProductNext()}>Next</button>
+          <form action="">
+            <div>
+              <p>ID:</p> <input type="number" name="_id" class="bg-emerald-100 w-50 " placeholder={ProductsCategory[index]._id} onChange={updateChange} /></div>
+            <div>
+              <p>Name:</p> <input type="text" name="name" class="bg-emerald-100 w-50  " placeholder={ProductsCategory[index].PRODUCT_NAME} onChange={updateChange} />
+
+            </div>
+            <div>
+              <p>Price:</p>
+              <input type="number" name="price" class="bg-emerald-100 w-50 " value={null} placeholder={ProductsCategory[index].PRICE} onChange={updateChange} />
+
+            </div>
+            <div>
+              <p>Description:</p>
+              <input type="text" name="description" class="bg-emerald-100 w-50 " placeholder={ProductsCategory[index].PRODUCT_DESC} onChange={updateChange} />
+
+            </div>
+            <div>
+              <p>Date:</p>
+              <input type="number" name="date" class="bg-emerald-100 w-50 " placeholder={ProductsCategory[index].PRODUCT_RELEASE_DATE} onChange={updateChange} />
+
+            </div>
+            <div>
+              <p>Image Link:</p>
+              <input type="text" name="image" class="bg-emerald-100 w-50 " placeholder={ProductsCategory[index].IMG_LINK} onChange={updateChange} />
+
+            </div>
+            <div>
+              <p>Rating:</p>
+              <input type="text" name="rating" class="bg-emerald-100 w-50 " placeholder={ProductsCategory[index].RATING} onChange={updateChange} />
+            </div>
+            <div>
+              <button class=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300" type="submit" onClick={updateOneProduct}>
+                submit
+              </button>
+            </div>
+
+          </form>
+        </div>
       </div>
-      <hr></hr>
-      <div class="mt-20">
-      <h1>Update Product Price</h1>
-      <h3>All Boxes must be filled out</h3>
-      <button className=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300"  onClick={() => getOneByOneProductPrev()}>Prev</button>
-        <button  className=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300" onClick={() => getOneByOneProductNext()}>Next</button>
-      <form action="">
-      <div>  
-          <p>ID:</p> <input type="number"  name="_id" class="bg-emerald-100 w-50 "  placeholder={ProductsCategory[index]._id} onChange={updateChange} /></div>
-          <div>
-          <p>Name:</p> <input type="text"  name="name" class="bg-emerald-100 w-50  " placeholder={ProductsCategory[index].PRODUCT_NAME} onChange={updateChange} />
-                        
-          </div>
-          <div>
-          <p>Price:</p> 
-          <input type="number"  name="price" class="bg-emerald-100 w-50 " value={null} placeholder={ProductsCategory[index].PRICE} onChange={updateChange}/>
-                        
-            </div>
-            <div>
-            <p>Description:</p> 
-            <input type="text"  name="description" class="bg-emerald-100 w-50 " placeholder={ProductsCategory[index].PRODUCT_DESC} onChange={updateChange} />
-                        
-            </div>
-            <div>
-            <p>Date:</p> 
-            <input type="number"  name="date" class="bg-emerald-100 w-50 " placeholder={ProductsCategory[index].PRODUCT_RELEASE_DATE} onChange={updateChange} />
-             
-            </div>
-            <div>
-            <p>Image Link:</p> 
-            <input type="text"  name="image" class="bg-emerald-100 w-50 " placeholder={ProductsCategory[index].IMG_LINK} onChange={updateChange} />
-             
-            </div>
-            <div>
-            <p>Rating:</p> 
-            <input type="text"  name="rating" class="bg-emerald-100 w-50 " placeholder={ProductsCategory[index].RATING} onChange={updateChange} />
-            </div>
-            <div>
-            <button class=" w-20 h-10 rounded-full mx-2 bg-emerald-400 hover:bg-sky-700 active:bg-black-700 focus:outline-none focus:ring focus:ring-black-300" type="submit" onClick={updateOneProduct}>
-                            submit
-                        </button>
-            </div>
-                       
-                    </form>
-     </div>
-    </div>
-  );
+    );
   }
 
 
@@ -1049,11 +1039,12 @@ const showAllItems = ProductsCategory.map((el) => (
   return (
 
     <div>
-      
+
       <div> {state === "products" && newProductPage()}</div>
       <div>{state === "admin" && displayAdminPage()}</div>
-      <div> {(state === "cart" && cart.length > 0) && cartPage}</div>
-      <div>{((state ==="checkout" && cart.length > 0) ) && displayCheckOutPage()}</div>
+      <div>
+      {(state === "cart" ) && newCartPage()}</div>
+      <div>{((state === "checkout" && cart.length > 0)) && displayCheckOutPage()}</div>
 
 
     </div>

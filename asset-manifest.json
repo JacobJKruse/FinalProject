@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/JacobJKruse/FinalProject.github.io/react-gh-pages/static/css/main.023ba102.css",
-    "main.js": "/JacobJKruse/FinalProject.github.io/react-gh-pages/static/js/main.95ebcc9a.js",
-    "static/media/icon-admin.png": "/JacobJKruse/FinalProject.github.io/react-gh-pages/static/media/icon-admin.f69058162726c0d47b2b.png",
-    "static/media/addtocart.png": "/JacobJKruse/FinalProject.github.io/react-gh-pages/static/media/addtocart.0536a050c115dd91665c.png",
-    "index.html": "/JacobJKruse/FinalProject.github.io/react-gh-pages/index.html",
-    "main.023ba102.css.map": "/JacobJKruse/FinalProject.github.io/react-gh-pages/static/css/main.023ba102.css.map",
-    "main.95ebcc9a.js.map": "/JacobJKruse/FinalProject.github.io/react-gh-pages/static/js/main.95ebcc9a.js.map"
+    "main.css": "/FinalProject/static/css/main.023ba102.css",
+    "main.js": "/FinalProject/static/js/main.2cea0fdf.js",
+    "static/media/icon-admin.png": "/FinalProject/static/media/icon-admin.f69058162726c0d47b2b.png",
+    "static/media/addtocart.png": "/FinalProject/static/media/addtocart.0536a050c115dd91665c.png",
+    "index.html": "/FinalProject/index.html",
+    "main.023ba102.css.map": "/FinalProject/static/css/main.023ba102.css.map",
+    "main.2cea0fdf.js.map": "/FinalProject/static/js/main.2cea0fdf.js.map"
   },
   "entrypoints": [
     "static/css/main.023ba102.css",
-    "static/js/main.95ebcc9a.js"
+    "static/js/main.2cea0fdf.js"
   ]
 }

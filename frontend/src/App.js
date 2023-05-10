@@ -79,12 +79,7 @@ export const App = () => {
     return hmot.length;
 
   }
-  function handleShowHideCart() {
 
-
-
-
-  }
   function handleshowPurchase() {
     if (cart.length > 0) {
       setstate("cart");
@@ -131,7 +126,7 @@ export const App = () => {
 
 
   const render_products = (ProductsCategory) => {
-
+    
     return <div className='category-section filled'>
       {console.log("Step 3 : in render_products ")}
 
@@ -160,9 +155,10 @@ export const App = () => {
 
                   <p className="mt-1 text-sm text-gray-500">Rating: {el.RATING} %</p>
                   <p className="text-sm font-medium text-green-600 text-left">${el.PRICE}</p>
-                  <button type="button" class=" p-5  rounded-lg outline-black-500  border-2 hover:bg-slate-200" variant="light" onClick={() => addToCart(el)}>Add To Cart<img src={cartImage} class="cartImage inline"></img></button>
+                  <button type="button" class=" p-5  ml-28 rounded-lg outline-black-500  border-2 hover:bg-slate-200" variant="light" onClick={() => addToCart(el)}>Add To Cart<img src={cartImage} class="cartImage inline"></img></button>
                 </div>
-
+                
+              
               </div>
 
             </div>
@@ -182,21 +178,20 @@ export const App = () => {
       <div class="row border-top border-bottom" key={el._id}>
         <div class="row main align-items-center">
           <div class="mb-5 shadow-lg ">
-          
+
             <img class="border-2 border-slate-500 mr-5" src={el.IMG_LINK} />
             <div>
-            <div>
-            <div class=" text-muted">{el.PRODUCT_NAME}</div>
-            <div class="">{el.CATEGORY}</div>
-            <div>${el.PRICE} <span class="close">&#10005;</span>{howManyofThis(el._id)}</div>
-            <button type="button" class="border-2  border-bottom border-slate-500 mr-5 hover:bg-slate-200" variant="heavy" onClick={() => removeFromCart(el)} > Remove </button>{" "}
-            <button type="button" variant="heavy" class="border-2 border-slate-500 px-3 hover:bg-slate-200" onClick={() => addToCart(el)}> + </button>
+              <div>
+                <div class=" text-muted">{el.PRODUCT_NAME}</div>
+                <div>${el.PRICE} <span class="close">&#10005;</span>{howManyofThis(el._id)}</div>
+                <button type="button" class="border-2  border-bottom border-slate-500 mr-5 hover:bg-slate-200" variant="heavy" onClick={() => removeFromCart(el)} > Remove </button>{" "}
+                <button type="button" variant="heavy" class="border-2 border-slate-500 px-3 hover:bg-slate-200" onClick={() => addToCart(el)}> + </button>
+              </div>
+
             </div>
-           
-            </div>
-           
+
           </div>
-          
+
         </div>
       </div>
     </div>
@@ -268,7 +263,10 @@ dark:focus:ring-blue-500 align-items: flex-end  dark:focus:border-blue-500" />
                 alt="cart Image"
                 src={cartImage}
                 className=" inline pr-800 w-5 h-5 "
-              /></button>
+              />
+              </button>
+              <div>{cart.length > 0 && <p class="-translate-x-24  -translate-y-1 text-center  w-5 text-white bg-red-600 rounded-full">{cart.length}</p>}
+              </div>
               <button type="button" className="border-solid bg-white rounded-lg border-2 border-neutral-50 mx-6 px-5 hover:bg-slate-200" variant="light" onClick={() => setstate('admin')}> admin<img
                 alt="admin Image"
                 src={adminImage}
@@ -300,7 +298,7 @@ dark:focus:ring-blue-500 align-items: flex-end  dark:focus:border-blue-500" />
         <div className="w-full pt-24">
           {console.log("Before render :", items.length, ProductsCategory.length)}
           {render_products(ProductsCategory)}
-                  
+
 
 
 
@@ -316,84 +314,41 @@ dark:focus:ring-blue-500 align-items: flex-end  dark:focus:border-blue-500" />
 
 
   const newCartPage = () => {
-  return (
-    <div className=" ">
-    <h1 class="text-center text-4xl bg-slate-100 rounded-lg w-screen ">CART</h1>
-    
-      <div class ="max-w-sm mb-10 rounded overflow-hidden shadow-lg  m-auto pt-10 mt-10 border-2 col">
-      <span class="border-2 p-2 mt-2 rounded-lg   grid place-items-center hover:bg-slate-200 ">
-    <button type="button"  variant="light" onClick={() => setstate("products")}> Return to Shop
-    <img
-                    alt="cart Image"
-                    src={cartImage}
-                    className=" inline pr-800 w-5 h-5 "
-                  /></button></span>
-      {cart.length>=0 &&<div>
+    return (
+      <div className=" ">
+        <h1 class="text-center text-4xl bg-slate-100 rounded-lg w-screen ">CART</h1>
 
-          {listItems}</div>}
-          {cart.length<=0 &&<div><h1>YOUR CART IS EMPTY</h1></div>}
+        <div class="max-w-sm mb-10 rounded overflow-hidden shadow-lg  m-auto pt-10 mt-10 border-2 col">
+          <span class="border-2 p-2 mt-2 rounded-lg   grid place-items-center hover:bg-slate-200 ">
+            <button type="button" variant="light" onClick={() => setstate("products")}> Return to Shop
+              <img
+                alt="cart Image"
+                src={cartImage}
+                className=" inline pr-800 w-5 h-5 "
+              /></button></span>
+          {cart.length >= 0 && <div>
+
+            {listItems}</div>}
+          {cart.length <= 0 && <div><h1>YOUR CART IS EMPTY</h1></div>}
 
           <div class="float-end">
-          <p class="mb-0 me-5 d-flex align-items-center">
-            <span class="text-lg text-muted me-2">Order total:</span>
-            <span class="lead text-lg fw-normal">${cartTotal}</span>
+            <p class="mb-0 me-5 d-flex align-items-center">
+              <span class="text-lg text-muted me-2">Order total:</span>
+              <span class="lead text-lg fw-normal">${cartTotal}</span>
 
-          </p>
-          <span class="inline"><button type="button" class="border-2 mb-5  mx-24 p-2 rounded-lg hover:bg-slate-200 " variant="light" onClick={() => setstate("checkout")}> Proceed to Checkout<img
-            alt="cart Image"
-            src={cartImage}
-            className=" inline pr-800 w-5 h-5 "
-          /></button></span>
+            </p>
+            <span class="inline"><button type="button" class="border-2 mb-5  mx-24 p-2 rounded-lg hover:bg-slate-200 " variant="light" onClick={() => setstate("checkout")}> Proceed to Checkout<img
+              alt="cart Image"
+              src={cartImage}
+              className=" inline pr-800 w-5 h-5 "
+            /></button></span>
+          </div>
         </div>
+
       </div>
-      
-    </div>
-  );
+    );
   }
 
-  // const cartPage = (<div>
-  //   STORE SE/ComS319
-  //   <div class="card">
-  //     <div class="row">
-  //       {/* HERE, IT IS THE SHOPING CART */}
-  //       <div class="col-md-8 cart">
-  //         <div class="title">
-  //           <div class="row">
-  //             <div class="col">
-  //               <h4>
-  //                 <b>319 Shopping Cart</b>
-  //                 <span class="inline"><button type="button" class="btn" variant="light" onClick={() => setstate("products")}> Return to Shop<img
-  //                   alt="cart Image"
-  //                   src={cartImage}
-  //                   className=" inline pr-800 w-5 h-5 "
-  //                 /></button></span>
-  //               </h4>
-  //             </div>
-  //             <div class="col align-self-center text-right text-muted">
-  //               Products selected {cart.length}
-  //             </div>
-  //           </div>
-  //         </div>
-          
-  //         <div>
-  //         {cart.length<=0 && <h1>YOUR CART IS EMPTY</h1>}
-  //         {listItems}</div>
-  //       </div>
-  //       <div class="float-end">
-  //         <p class="mb-0 me-5 d-flex align-items-center">
-  //           <span class="small text-muted me-2">Order total:</span>
-  //           <span class="lead fw-normal">${cartTotal}</span>
-
-  //         </p>
-  //         <span class="inline"><button type="button" class="btn" variant="light" onClick={() => setstate("checkout")}> Proceed to Checkout<img
-  //           alt="cart Image"
-  //           src={cartImage}
-  //           className=" inline pr-800 w-5 h-5 "
-  //         /></button></span>
-  //       </div>
-  //     </div>
-  //   </div>
-  // </div>);
 
 
   function isNumeric(n) {
@@ -518,7 +473,7 @@ dark:focus:ring-blue-500 align-items: flex-end  dark:focus:border-blue-500" />
     let switch1 = document.getElementById("switch");
     switch1.classList.add("hide-switch");
   }
-  
+
   function displayReceipt() {
     let popup = document.getElementById("Receipt");
     popup.classList.add("open-popup");
@@ -552,18 +507,18 @@ dark:focus:ring-blue-500 align-items: flex-end  dark:focus:border-blue-500" />
           <div id="switch">
             <h1>Payment:</h1>
             <div>
-            <div class="grid grid-cols-2 gap-4 place-content-center  m-5 ">
-              <span class="border-2 text-center h-10 hover:bg-slate-100 "><button type="button" class=" " variant="light" onClick={() => setstate("cart")}> Return to cart<img
-                alt="cart Image"
-                src={cartImage}
-                className=" inline pr-800 w-5 h-5 "
-              /></button></span>
-              <span class="border-2 text-center hover:bg-slate-100 "><button type="button" class="  " variant="light" onClick={() => setstate("products")}> Return to Prodcuts<img
-                alt="cart Image"
-                src={cartImage}
-                className=" inline pr-800 w-5 h-5 "
-              /></button></span>
-</div>
+              <div class="grid grid-cols-2 gap-4 place-content-center  m-5 ">
+                <span class="border-2 text-center h-10 hover:bg-slate-100 "><button type="button" class=" " variant="light" onClick={() => setstate("cart")}> Return to cart<img
+                  alt="cart Image"
+                  src={cartImage}
+                  className=" inline pr-800 w-5 h-5 "
+                /></button></span>
+                <span class="border-2 text-center hover:bg-slate-100 "><button type="button" class="  " variant="light" onClick={() => setstate("products")}> Return to Prodcuts<img
+                  alt="cart Image"
+                  src={cartImage}
+                  className=" inline pr-800 w-5 h-5 "
+                /></button></span>
+              </div>
               <div className="row">
                 <div className="col-2"></div>
 
@@ -825,7 +780,11 @@ dark:focus:ring-blue-500 align-items: flex-end  dark:focus:border-blue-500" />
           alert(value);
         }
       });
-     
+    if (ProductsCategory.length - 2 > 0) {
+      setIndex(ProductsCategory.length - 2);
+    } else {
+      setIndex(ProductsCategory.length - 1);
+    }
     setChecked4(!checked4);
   }
 
@@ -1043,7 +1002,7 @@ dark:focus:ring-blue-500 align-items: flex-end  dark:focus:border-blue-500" />
       <div> {state === "products" && newProductPage()}</div>
       <div>{state === "admin" && displayAdminPage()}</div>
       <div>
-      {(state === "cart" ) && newCartPage()}</div>
+        {(state === "cart") && newCartPage()}</div>
       <div>{((state === "checkout" && cart.length > 0)) && displayCheckOutPage()}</div>
 
 

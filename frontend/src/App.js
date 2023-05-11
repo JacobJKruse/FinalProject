@@ -12,7 +12,6 @@ export const App = () => {
   console.log("Step 1: After reading file :");
   const [showMore, setShowMore] = useState(false);
   const [showCart, setShowCart] = useState(false);
-
   const [showPurchase, setshowPurchase] = useState(false);
   //const [ProductsCategory, setProductsCategory] = useState(items);
   const [ProductsCategory, setProductsCategory] = useState([]);
@@ -999,10 +998,9 @@ dark:focus:ring-blue-500 align-items: flex-end  dark:focus:border-blue-500" />
     <div>
 
       <div> {state === "products" && newProductPage()}</div>
-      <div>{state === "admin" && displayAdminPage()}</div>
-      <div>
-        {(state === "cart") && newCartPage()}</div>
-      <div>{((state === "checkout" && cart.length > 0)) && displayCheckOutPage()}</div>
+      <div> {state === "admin" && displayAdminPage()}</div>
+      <div> {(state === "cart") && newCartPage()}</div>
+      <div> {((state === "checkout" && cart.length > 0)) && displayCheckOutPage()}</div>
 
 
     </div>
